@@ -1,8 +1,8 @@
-import {ChangeEventHandler, FC, FormEventHandler, useState} from "react";
+import {ChangeEventHandler, FC, FormEventHandler, useState} from 'react';
 import * as Form from '@radix-ui/react-form';
 
 import styles from './auth.module.css';
-import {useAuth} from "../providers/auth";
+import {useAuth} from '../providers/auth';
 
 export const LoginForm: FC = () => {
   const auth = useAuth();
@@ -43,17 +43,11 @@ export const LoginForm: FC = () => {
             <Form.Message className={styles.formMessage}>{err}</Form.Message>
           )}
 
-          <Form.Message
-            match="valueMissing"
-            className={styles.formMessage}
-          >
+          <Form.Message match="valueMissing" className={styles.formMessage}>
             Please enter your email
           </Form.Message>
 
-          <Form.Message
-            match="typeMismatch"
-            className={styles.formMessage}
-          >
+          <Form.Message match="typeMismatch" className={styles.formMessage}>
             Please provide a valid email
           </Form.Message>
         </div>
@@ -74,10 +68,7 @@ export const LoginForm: FC = () => {
             <Form.Message className={styles.formMessage}>{err}</Form.Message>
           )}
 
-          <Form.Message
-            match="valueMissing"
-            className={styles.formMessage}
-          >
+          <Form.Message match="valueMissing" className={styles.formMessage}>
             Please enter your password
           </Form.Message>
         </div>
@@ -89,15 +80,16 @@ export const LoginForm: FC = () => {
           onChange={handleChange}
           required
         />
-
       </Form.Field>
 
       <Form.Submit asChild>
-        <button type="submit" className={styles.submit}>Sign In</button>
+        <button type="submit" className={styles.submit}>
+          Sign In
+        </button>
       </Form.Submit>
     </Form.Root>
-  )
-}
+  );
+};
 
 export const SignUpForm: FC = () => {
   const auth = useAuth();
@@ -166,17 +158,11 @@ export const SignUpForm: FC = () => {
             <Form.Message className={styles.formMessage}>{err}</Form.Message>
           )}
 
-          <Form.Message
-            match="valueMissing"
-            className={styles.formMessage}
-          >
+          <Form.Message match="valueMissing" className={styles.formMessage}>
             Please enter your email
           </Form.Message>
 
-          <Form.Message
-            match="typeMismatch"
-            className={styles.formMessage}
-          >
+          <Form.Message match="typeMismatch" className={styles.formMessage}>
             Please provide a valid email
           </Form.Message>
         </div>
@@ -197,10 +183,7 @@ export const SignUpForm: FC = () => {
             <Form.Message className={styles.formMessage}>{err}</Form.Message>
           )}
 
-          <Form.Message
-            match="valueMissing"
-            className={styles.formMessage}
-          >
+          <Form.Message match="valueMissing" className={styles.formMessage}>
             Please enter your password
           </Form.Message>
         </div>
@@ -212,12 +195,13 @@ export const SignUpForm: FC = () => {
           onChange={handleChange}
           required
         />
-
       </Form.Field>
 
       <Form.Submit asChild>
-        <button type="submit" className={styles.submit}>Sign In</button>
+        <button type="submit" className={styles.submit}>
+          Sign In
+        </button>
       </Form.Submit>
     </Form.Root>
-  )
-}
+  );
+};

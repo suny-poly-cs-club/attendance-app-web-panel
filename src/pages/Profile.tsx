@@ -1,7 +1,17 @@
-import { FC } from "react";
-import { useAuth } from "../providers/auth";
+import {FC, useEffect, useState} from 'react';
+import {AuthUser, useAuth, useRest} from '../providers/auth';
 
 const ProfilePage: FC = () => {
+  // const [user, setUser] = useState<AuthUser>();
+  const rest = useRest();
+
+  // useEffect(() => {
+  //   console.log(rest);
+
+  //   rest.getUser()
+  //     .then(user => (setUser(user)));
+  // }, [rest]);
+
   const {user} = useAuth();
 
   return (
@@ -11,7 +21,7 @@ const ProfilePage: FC = () => {
       <p>Email: {user?.email}</p>
       <p>Is Admin?: {user?.isAdmin ? 'true' : 'false'}</p>
     </div>
-  )
+  );
 };
 
 export default ProfilePage;

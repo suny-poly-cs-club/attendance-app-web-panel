@@ -1,4 +1,12 @@
-import {FC, MouseEventHandler, ReactEventHandler, ReactNode, useCallback, useEffect, useRef} from "react";
+import {
+  FC,
+  MouseEventHandler,
+  ReactEventHandler,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+} from 'react';
 
 import {Cross1Icon} from '@radix-ui/react-icons';
 
@@ -6,23 +14,29 @@ import styles from './Modal.module.css';
 
 const Modal: FC<{
   isOpen: boolean;
-  children: ReactNode
+  children: ReactNode;
   onClose: () => void;
-  closeOnClickOutside?: boolean
+  closeOnClickOutside?: boolean;
   title: string;
 }> = ({isOpen, children, title, onClose, closeOnClickOutside = true}) => {
   const ref = useRef<HTMLDialogElement>(null);
 
-  const onClick: MouseEventHandler = useCallback(event => {
-    if (closeOnClickOutside && event.target === ref.current) {
-      onClose();
-    }
-  }, [onClose]);
+  const onClick: MouseEventHandler = useCallback(
+    event => {
+      if (closeOnClickOutside && event.target === ref.current) {
+        onClose();
+      }
+    },
+    [onClose]
+  );
 
-  const onCancel: ReactEventHandler<HTMLDialogElement> = useCallback(event => {
-    event.preventDefault();
-    onClose();
-  }, [onClose]);
+  const onCancel: ReactEventHandler<HTMLDialogElement> = useCallback(
+    event => {
+      event.preventDefault();
+      onClose();
+    },
+    [onClose]
+  );
 
   useEffect(() => {
     if (isOpen) {
@@ -30,7 +44,7 @@ const Modal: FC<{
     } else {
       ref.current?.close();
     }
-  }, [isOpen])
+  }, [isOpen]);
 
   return (
     <dialog
@@ -40,9 +54,7 @@ const Modal: FC<{
       onCancel={onCancel}
     >
       <div className={styles.container}>
-        <h1 className={styles.title}>
-          {title}
-        </h1>
+        <h1 className={styles.title}>{title}</h1>
 
         <Cross1Icon
           className={styles.closeIcon}
@@ -55,6 +67,6 @@ const Modal: FC<{
         {children}
       </div>
     </dialog>
-  )
-}
+  );
+};
 export default Modal;
