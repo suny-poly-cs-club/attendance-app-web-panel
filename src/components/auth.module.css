@@ -1,0 +1,80 @@
+.formRoot {
+  width: 400px;
+  /* background-color: var(--nord3); */
+  /* border-radius: 15px; */
+  font-size: 1em;
+
+  /* padding: 10px; */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .formLabelInfo {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .formLabel {
+    font-size: 1em;
+    color: var(--nord6);
+  }
+
+  .formMessage {
+    font-size: 0.8em;
+    color: var(--nord11);
+  }
+
+  .formField {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .input {
+    width: 100%;
+    box-sizing: border-box;
+    height: 35px;
+    font-size: 1em;
+
+    border-radius: 5px;
+    border: none;
+
+    color: var(--nord2);
+    background-color: var(--nord6);
+
+    &[data-invalid] {
+      border: 2px solid var(--nord11);
+    }
+
+    &:focus {
+      /* border: 1px solid black; */
+      outline: none;
+    }
+  }
+
+  .submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+
+    width: 100%;
+    height: 35px;
+
+    padding: 0 10px;
+
+    background-color: var(--nord6);
+    border-radius: 5px;
+    border: none;
+
+    &:hover {
+      background-color: var(--nord4);
+    }
+  }
+
+  .nameFields {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,11 @@
+.centered {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.authButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}

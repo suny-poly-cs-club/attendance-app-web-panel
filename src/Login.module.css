@@ -1,0 +1,16 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+
+  background-color: gray;
+
+  > label {
+    font-size: 15px;
+  }
+
+  > input {
+    font-size: 15px;
+    justify-content: center;
+  }
+}
