@@ -1,21 +1,28 @@
 import {FC, ReactNode} from 'react';
-import {useAuth} from '../providers/auth';
 import {Redirect} from 'wouter';
 
-const AuthRoute: FC<{children: ReactNode}> = ({children}) => {
+import {useAuth} from '../providers/auth';
+import LoadingPage from '../pages/Loading';
+
+const AuthRoute: FC<{children: ReactNode; requireAdmin?: boolean}> = ({
+  children,
+  requireAdmin = false,
+}) => {
   const {isLoggedIn, isLoading, user} = useAuth();
 
-  console.log(isLoggedIn, user);
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
-  return isLoggedIn ? (
-    isLoading ? (
-      <p>AuthRoute Loading...</p>
-    ) : (
-      children
-    )
-  ) : (
-    <Redirect to="/" />
-  );
+  if (isLoggedIn && user) {
+    if (requireAdmin && !user.isAdmin) {
+      return <Redirect to="/" />;
+    }
+
+    return children;
+  }
+
+  return <Redirect to="/" />;
 };
 
 export default AuthRoute;

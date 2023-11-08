@@ -1,5 +1,5 @@
 import {FC, useEffect, useState} from 'react';
-import {Button, Space, Table, TableColumnsType} from 'antd';
+import {Space, Table, TableColumnsType} from 'antd';
 import dayjs from 'dayjs';
 
 import {ClubDay} from '../rest';
@@ -9,6 +9,7 @@ import DeleteClubDayButton from '../components/DeleteClubDayButton';
 
 import styles from './ClubDays.module.css';
 import CreateClubDayButton from '../components/CreateClubDay';
+import QRDisplayModalButton from '../components/QRModal';
 
 type ClubDayTableData = ClubDay & {
   key: number;
@@ -36,7 +37,6 @@ const ClubDaysPage: FC = () => {
           formatted_ends_at: dayjs(d.ends_at).format('LLLL'),
         }));
         setData(mappedData);
-        console.log(mappedData);
       })
       .finally(() => setIsLoading(false));
   }, [update]);
@@ -78,7 +78,7 @@ const ClubDaysPage: FC = () => {
       render: (_, day) => (
         <>
           <Space>
-            <Button type="default">Open QR</Button>
+            <QRDisplayModalButton clubDay={day} />
 
             <ViewAttendeesButton clubDay={day} />
 

@@ -1,20 +1,15 @@
-import {FC, useEffect, useState} from 'react';
+import {FC} from 'react';
 import {Menu, Layout, Dropdown} from 'antd';
 import {useAuth} from '../providers/auth';
-import {Link, useLocation, useRouter} from 'wouter';
+import {Link, useLocation} from 'wouter';
 
 const {Header} = Layout;
 
 const Nav: FC = () => {
-  const {isLoggedIn, user, logout} = useAuth();
-  const [location, setLocation] = useLocation();
-  const [current, setCurrent] = useState(location);
-  const router = useRouter();
+  const {user, logout} = useAuth();
+  const [, setLocation] = useLocation();
 
-  useEffect(() => {
-    console.log('router:', router);
-    console.log('Location changed:', location);
-  }, [location]);
+  // TODO: how do I use this with wouter?
 
   return (
     <Header
@@ -31,11 +26,13 @@ const Nav: FC = () => {
           </Link>
         </Menu.Item>
 
-        <Menu.Item key="/club-days">
-          <Link href="/club-days">
-            <a>Club Days</a>
-          </Link>
-        </Menu.Item>
+        {user?.isAdmin && (
+          <Menu.Item key="/club-days">
+            <Link href="/club-days">
+              <a>Club Days</a>
+            </Link>
+          </Menu.Item>
+        )}
       </Menu>
       {user && (
         <Dropdown

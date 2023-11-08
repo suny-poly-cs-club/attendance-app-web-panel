@@ -1,5 +1,5 @@
 import {Button} from 'antd';
-import {FC, useCallback, useState} from 'react';
+import {FC, useState} from 'react';
 import CreateClubDayModal from './CreateClubDayModal';
 import {useRest} from '../providers/auth';
 import {Dayjs} from 'dayjs';

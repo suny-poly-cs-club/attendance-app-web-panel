@@ -1,11 +1,16 @@
-import {DatePicker, Form, Modal, TimePicker} from 'antd';
+import {DatePicker, Form, Modal} from 'antd';
+import {Dayjs} from 'dayjs';
 import {FC} from 'react';
 
 type Props = {
   open: boolean;
-  onCreate: (data: any) => void;
+  onCreate: (data: CreateClubDayFormData) => void;
   onCancel: () => void;
   confirmLoading: boolean;
+};
+
+type CreateClubDayFormData = {
+  range: [Dayjs, Dayjs];
 };
 
 const CreateClubDayModal: FC<Props> = ({
@@ -14,7 +19,7 @@ const CreateClubDayModal: FC<Props> = ({
   onCancel,
   confirmLoading,
 }) => {
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<CreateClubDayFormData>();
 
   return (
     <Modal
@@ -46,8 +51,8 @@ const CreateClubDayModal: FC<Props> = ({
               message: 'Please select a start and end time',
             },
             {
-              async validator(_, [start, _end]) {
-                if (start.$d.getTime() <= Date.now()) {
+              async validator(_, [_start, end]) {
+                if (end.$d.getTime() <= Date.now()) {
                   throw new Error('Clubs cannot be created in the past');
                 }
               },

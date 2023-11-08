@@ -8,8 +8,6 @@ import {
   useRef,
 } from 'react';
 
-import {Cross1Icon} from '@radix-ui/react-icons';
-
 import styles from './Modal.module.css';
 
 const Modal: FC<{
@@ -55,12 +53,6 @@ const Modal: FC<{
     >
       <div className={styles.container}>
         <h1 className={styles.title}>{title}</h1>
-
-        <Cross1Icon
-          className={styles.closeIcon}
-          role="button"
-          onClick={() => onClose()}
-        />
 
         <hr className={styles.sectionDivider} />
 

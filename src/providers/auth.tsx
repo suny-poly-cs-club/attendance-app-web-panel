@@ -6,13 +6,7 @@ import {
   useState,
 } from 'react';
 
-import {
-  RestClient,
-  RestError,
-  getUser,
-  login as loginREST,
-  signUp as signUpREST,
-} from '../rest';
+import {RestClient, RestError} from '../rest';
 
 const TOKEN_LOCAL_STORAGE_KEY = 'token';
 
@@ -85,7 +79,8 @@ export const AuthProvider = ({children}: PropsWithChildren<{}>) => {
       return;
     }
 
-    getUser(token)
+    restClient
+      .getUser()
       .then(user => setUser(user))
       .finally(() => setIsLoading(false));
   }, [token]);
@@ -94,20 +89,39 @@ export const AuthProvider = ({children}: PropsWithChildren<{}>) => {
     [key in 'email' | 'password' | 'firstName' | 'lastName']: string;
   }) => {
     setIsLoading(true);
-    const token = await signUpREST(signUpArgs);
-    setIsLoading(false);
+    try {
+      const token = await restClient.signUp(signUpArgs);
+      setToken(token.token);
+      localStorage.setItem(TOKEN_LOCAL_STORAGE_KEY, token.token);
+    } catch (err) {
+      if (err instanceof RestError) {
+        console.error('Failed to sign up user:', err);
+        throw err;
+      }
 
-    setToken(token.token);
-    localStorage.setItem(TOKEN_LOCAL_STORAGE_KEY, token.token);
+      console.error('Unhandled error in signUp:', err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const login = async (email: string, pass: string) => {
+  const login = async (email: string, password: string) => {
     setIsLoading(true);
-    const token = await loginREST(email, pass);
-    setIsLoading(false);
 
-    setToken(token.token);
-    localStorage.setItem(TOKEN_LOCAL_STORAGE_KEY, token.token);
+    try {
+      const token = await restClient.login({email, password});
+      setToken(token.token);
+      localStorage.setItem(TOKEN_LOCAL_STORAGE_KEY, token.token);
+    } catch (err) {
+      if (err instanceof RestError) {
+        console.error('Failed to log in:', err);
+        throw err;
+      }
+
+      console.error('Unhandled error:', err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const logout = () => {

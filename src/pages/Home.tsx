@@ -1,12 +1,11 @@
 import {FC, useEffect} from 'react';
+import {Button} from 'antd';
 
 import {useAuth} from '../providers/auth';
-import {LoginForm, SignUpForm} from '../components/Auth';
-
 import styles from './Home.module.css';
-import Modal from '../components/Modal';
 import {useModal} from '../hooks/modal';
-import {Button} from 'antd';
+import {LoginForm} from '../components/LogInForm';
+import {SignUpForm} from '../components/SignUpForm';
 
 const HomePage: FC = () => {
   const {isLoggedIn, user} = useAuth();
@@ -49,21 +48,11 @@ const HomePage: FC = () => {
             <Button onClick={() => openSignUpForm()}>Sign Up</Button>
           </div>
 
-          <Modal
-            isOpen={isLogInFormOpen}
-            onClose={closeLogInForm}
-            title="Log In"
-          >
-            <LoginForm />
-          </Modal>
-
-          <Modal
-            isOpen={isSignUpFormOpen}
-            onClose={closeSignUpForm}
-            title="Sign Up"
-          >
-            <SignUpForm />
-          </Modal>
+          <LoginForm open={isLogInFormOpen} onCancel={() => closeLogInForm()} />
+          <SignUpForm
+            open={isSignUpFormOpen}
+            onCancel={() => closeSignUpForm()}
+          />
         </>
       )}
     </div>
