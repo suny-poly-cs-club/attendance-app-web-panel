@@ -2,6 +2,7 @@ import {FC} from 'react';
 import {Form, Input, Modal} from 'antd';
 
 import {useAuth} from '../providers/auth';
+import {RestError} from '../rest';
 
 type SignUpProps = {
   open: boolean;
@@ -29,16 +30,24 @@ export const SignUpForm: FC<SignUpProps> = ({open, onCancel}) => {
               onCancel();
             })
             .catch(err => {
-              form.setFields([
-                {
-                  name: 'email',
-                  errors: [err.message],
-                },
-                {
-                  name: 'password',
-                  errors: [err.message],
-                },
-              ]);
+              if (err instanceof RestError) {
+                err.res.json().then(err => {
+                  if (err?.type === 'validation_error') {
+                    form.setFields(err.issues);
+                  } else {
+                    form.setFields([
+                      {
+                        name: 'email',
+                        errors: [err.message],
+                      },
+                      {
+                        name: 'password',
+                        errors: [err.message],
+                      },
+                    ]);
+                  }
+                });
+              }
             });
         });
       }}
@@ -54,7 +63,7 @@ export const SignUpForm: FC<SignUpProps> = ({open, onCancel}) => {
           <Form.Item
             name="firstName"
             label="First Name"
-            rules={[{required: true, type: 'string'}]}
+            rules={[{required: true, type: 'string', max: 80}]}
             style={{width: '100%'}}
           >
             <Input />
@@ -63,7 +72,7 @@ export const SignUpForm: FC<SignUpProps> = ({open, onCancel}) => {
           <Form.Item
             name="lastName"
             label="Last Name"
-            rules={[{required: true, type: 'string'}]}
+            rules={[{required: true, type: 'string', max: 80}]}
             style={{width: '100%'}}
           >
             <Input />
@@ -73,11 +82,15 @@ export const SignUpForm: FC<SignUpProps> = ({open, onCancel}) => {
         <Form.Item
           name="email"
           label="Email"
-          rules={[{required: true, type: 'email'}]}
+          rules={[{required: true, type: 'email', max: 254}]}
         >
           <Input />
         </Form.Item>
-        <Form.Item name="password" label="Password" rules={[{required: true}]}>
+        <Form.Item
+          name="password"
+          label="Password"
+          rules={[{required: true, min: 5}]}
+        >
           <Input type="password" />
         </Form.Item>
       </Form>

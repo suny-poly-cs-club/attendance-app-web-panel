@@ -2,8 +2,8 @@ import {AuthUser} from './providers/auth';
 
 export type ClubDay = {
   attendees: number;
-  starts_at: string;
-  ends_at: string;
+  startsAt: string;
+  endsAt: string;
   id: number;
 };
 

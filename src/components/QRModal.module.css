@@ -1,0 +1,14 @@
+@media print {
+  body {
+    visibility: hidden;
+  }
+
+  .qrCode {
+    background-color: red;
+    visibility: visible;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+}
+

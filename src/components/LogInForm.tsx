@@ -2,6 +2,7 @@ import {FC} from 'react';
 import {Form, Input, Modal} from 'antd';
 
 import {useAuth} from '../providers/auth';
+import {RestError} from '../rest';
 
 type LogInProps = {
   open: boolean;
@@ -28,16 +29,24 @@ export const LoginForm: FC<LogInProps> = ({open, onCancel}) => {
               onCancel();
             })
             .catch(err => {
-              form.setFields([
-                {
-                  name: 'email',
-                  errors: [err.message],
-                },
-                {
-                  name: 'password',
-                  errors: [err.message],
-                },
-              ]);
+              if (err instanceof RestError) {
+                err.res.json().then(err => {
+                  if (err.type === 'validation_error') {
+                    form.setFields(err.issues);
+                  } else {
+                    form.setFields([
+                      {
+                        name: 'email',
+                        errors: [err.message],
+                      },
+                      {
+                        name: 'password',
+                        errors: [err.message],
+                      },
+                    ]);
+                  }
+                });
+              }
             });
         });
       }}
@@ -56,7 +65,7 @@ export const LoginForm: FC<LogInProps> = ({open, onCancel}) => {
         <Form.Item
           name="email"
           label="Email"
-          rules={[{required: true, type: 'email'}]}
+          rules={[{required: true, type: 'email', max: 254}]}
         >
           <Input />
         </Form.Item>

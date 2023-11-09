@@ -13,8 +13,8 @@ import QRDisplayModalButton from '../components/QRModal';
 
 type ClubDayTableData = ClubDay & {
   key: number;
-  formatted_starts_at: string;
-  formatted_ends_at: string;
+  formattedStartsAt: string;
+  formattedEndsAt: string;
 };
 
 const ClubDaysPage: FC = () => {
@@ -33,8 +33,8 @@ const ClubDaysPage: FC = () => {
         const mappedData = data.map(d => ({
           ...d,
           key: d.id,
-          formatted_starts_at: dayjs(d.starts_at).format('LLLL'),
-          formatted_ends_at: dayjs(d.ends_at).format('LLLL'),
+          formattedStartsAt: dayjs(d.startsAt).format('LLLL'),
+          formattedEndsAt: dayjs(d.endsAt).format('LLLL'),
         }));
         setData(mappedData);
       })
@@ -50,19 +50,19 @@ const ClubDaysPage: FC = () => {
 
     {
       title: 'Starts At',
-      dataIndex: 'starts_at',
-      key: 'starts_at',
+      dataIndex: 'startsAt',
+      key: 'startsAt',
       render: (_, day) => (
-        <time dateTime={day.starts_at}>{day.formatted_starts_at}</time>
+        <time dateTime={day.startsAt}>{day.formattedStartsAt}</time>
       ),
     },
 
     {
       title: 'Ends At',
-      dataIndex: 'ends_at',
-      key: 'ends_at',
+      dataIndex: 'endsAt',
+      key: 'endsAt',
       render: (_, day) => (
-        <time dateTime={day.ends_at}>{day.formatted_ends_at}</time>
+        <time dateTime={day.endsAt}>{day.formattedEndsAt}</time>
       ),
     },
 

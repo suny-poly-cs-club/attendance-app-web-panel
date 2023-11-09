@@ -4,6 +4,8 @@ import {ClubDay} from '../rest';
 import {useRest} from '../providers/auth';
 import qr from 'qrcode';
 
+import styles from './QRModal.module.css';
+
 type ButtonProps = {
   clubDay: ClubDay;
 };
@@ -15,8 +17,8 @@ const QRDisplayModalButton: FC<ButtonProps> = ({clubDay}) => {
     setOpen(false);
   };
 
-  const starts = new Date(clubDay.starts_at);
-  const ends = new Date(clubDay.ends_at);
+  const starts = new Date(clubDay.startsAt);
+  const ends = new Date(clubDay.endsAt);
 
   return (
     <>
@@ -61,6 +63,16 @@ const QRDisplayModal: FC<ModalProps> = ({clubDay, open, onCancel}) => {
       onCancel={onCancel}
       footer={[
         <Button
+          key="print"
+          type="default"
+          onClick={() => {
+            print();
+          }}
+        >
+          Print
+        </Button>,
+
+        <Button
           key="fullscreen"
           type="default"
           onClick={() => {
@@ -81,7 +93,7 @@ const QRDisplayModal: FC<ModalProps> = ({clubDay, open, onCancel}) => {
         </Button>,
       ]}
     >
-      {qrData && <img ref={ref} src={qrData} />}
+      {qrData && <img ref={ref} src={qrData} className={styles.qrCode} />}
     </Modal>
   );
 };
