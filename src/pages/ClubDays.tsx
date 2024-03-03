@@ -17,6 +17,51 @@ type ClubDayTableData = ClubDay & {
   formattedEndsAt: string;
 };
 
+function ClubsDropdown({rerender}) {
+  const rest = useRest();
+  const [options, setOptions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+	//get the list of clubs from the server
+      const response = await rest.getClubs();
+	  if(response){
+		setOptions(response);
+		if(response.length!=0){
+		//set the initial select optio to the first one on te list
+			setSelectedOption(response[0].id);
+			rest.setSelectedClub(response[0].id);
+			rerender();
+		}
+	  }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleOnChange = (event) => {
+    setSelectedOption(event.target.value);
+	//console.log(event.target.value);
+	rest.setSelectedClub(event.target.value);
+    // Fetch additional data or update content based on selection here
+	rerender();
+  };
+
+  return (
+    <div>
+      <select value={selectedOption} onChange={handleOnChange}>
+        {options.map((option) => (
+          <option key={option.id} value={option.id}>
+            {option.name}
+          </option>
+        ))}
+      </select>
+      {/* Update content based on selectedOption here */}
+    </div>
+  );
+}
+
 const ClubDaysPage: FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -25,6 +70,8 @@ const ClubDaysPage: FC = () => {
 
   const [update, _setUpdate] = useState(false);
   const forceReloadData = () => _setUpdate(s => !s);
+  
+  
 
   useEffect(() => {
     rest
@@ -91,6 +138,7 @@ const ClubDaysPage: FC = () => {
 
   return (
     <>
+	  <ClubsDropdown rerender={forceReloadData} />
       <div className={styles.createButtonContainer}>
         <h1>Club Days</h1>
 
@@ -98,6 +146,7 @@ const ClubDaysPage: FC = () => {
           <CreateClubDayButton rerender={forceReloadData} />
         </div>
       </div>
+	  
 
       <Table columns={columns} dataSource={data} loading={isLoading} />
     </>

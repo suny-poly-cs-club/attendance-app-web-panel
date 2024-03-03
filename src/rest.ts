@@ -18,6 +18,11 @@ export class RestClient {
   ) {
     this.#token = token;
     this.#on401 = on401;
+	this.selectedClubId = -	1;
+  }
+  
+  setSelectedClub(id){
+	this.selectedClubId = id
   }
 
   async login({
@@ -69,7 +74,7 @@ export class RestClient {
 
   async getClubDays(): Promise<ClubDay[]> {
     return this.#wrap(
-      fetch(this.#BASE_URL + '/club-days', {
+      fetch(this.#BASE_URL + '/club-days?clubId='+this.selectedClubId, {
         headers: this.#getHeaders(),
       })
     ).then(r => r?.json());
@@ -77,7 +82,7 @@ export class RestClient {
 
   async getAttendees(id: number): Promise<AuthUser[]> {
     return this.#wrap(
-      fetch(this.#BASE_URL + `/club-days/${id}/attendees`, {
+      fetch(this.#BASE_URL + `/club-days/${id}/attendees?clubId=`+this.selectedClubId, {
         headers: this.#getHeaders(),
       })
     ).then(r => r?.json());
@@ -85,7 +90,7 @@ export class RestClient {
 
   async deleteClubDay(id: number): Promise<ClubDay> {
     return this.#wrap(
-      fetch(this.#BASE_URL + `/club-days/${id}`, {
+      fetch(this.#BASE_URL + `/club-days/${id}?clubId=`+this.selectedClubId, {
         method: 'DELETE',
         headers: this.#getHeaders(),
       })
@@ -99,6 +104,7 @@ export class RestClient {
         body: JSON.stringify({
           startsAt: start.toISOString(),
           endsAt: end.toISOString(),
+		  clubId: this.selectedClubId,
         }),
         headers: {
           ...this.#getHeaders(),
@@ -110,11 +116,21 @@ export class RestClient {
 
   async getClubDayQRToken(id: number): Promise<{token: string}> {
     return this.#wrap(
-      fetch(this.#BASE_URL + `/club-days/${id}/qr-token`, {
+      fetch(this.#BASE_URL + `/club-days/${id}/qr-token?clubId=`+this.selectedClubId, {
         headers: this.#getHeaders(),
       })
     ).then(r => r?.json());
   }
+  
+  async getClubs(){
+	return this.#wrap(
+      fetch(this.#BASE_URL + '/club', {
+        headers: this.#getHeaders(),
+      })
+    ).then(res => res?.json());
+  }
+  
+  
 
   /**
    * Maps any error to a RestError, and optionally runs a function if the API returns 401
