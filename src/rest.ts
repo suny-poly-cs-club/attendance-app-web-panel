@@ -11,6 +11,8 @@ export class RestClient {
   #token: string | null;
   #BASE_URL: string = import.meta.env.VITE_API_BASE_URL;
   #on401: (res: Response) => void | Promise<void> | boolean | Promise<boolean>;
+  selectedClubId: number;
+  hadClubs: boolean;
 
   constructor(
     token: string | null,
@@ -18,12 +20,16 @@ export class RestClient {
   ) {
     this.#token = token;
     this.#on401 = on401;
-	this.selectedClubId = -	1;
-	this.hadClubs = false;
+	  this.selectedClubId = -	1;
+	  this.hadClubs = false;
   }
   
   setSelectedClub(id){
 	this.selectedClubId = id
+  }
+  
+  getSelectedClub(){
+    return this.selectedClubId;
   }
 
   async login({
@@ -124,7 +130,7 @@ export class RestClient {
   }
   
   async getClubs(){
-	return this.#wrap(
+	 return this.#wrap(
       fetch(this.#BASE_URL + '/club', {
         headers: this.#getHeaders(),
       })
@@ -132,20 +138,43 @@ export class RestClient {
   }
   
   async hasClubs(){
-	const clubs = await this.getClubs();
-	if(!clubs || clubs.length == 0){
-		this.hadClubs = false;
-		return false;
-	}
-	if(this.selectedClubId==-1){
-		this.selectedClubId = clubs[0].id;
-	}
-	this.hadClubs=true;
-	return true;
+	 const clubs = await this.getClubs();
+	 if(!clubs || clubs.length == 0){
+	 	this.hadClubs = false;
+	 	return false;
+	 }
+	 if(this.selectedClubId==-1){
+	 	this.selectedClubId = clubs[0].id;
+	 }
+	 this.hadClubs=true;
+	 return true;
   }
   
   getHadClubs(){
-	return this.hadClubs;
+	 return this.hadClubs;
+  }
+  
+  async getClubAdmins(): Promise<AuthUser[]>{
+    return this.#wrap(
+      fetch(this.#BASE_URL + `/club/admins/`+this.selectedClubId, {
+        headers: this.#getHeaders(),
+      })
+      ).then(r => r?.json());
+  }
+  
+  async searchUsers(searchWords: string): Promise<AuthUser[]>{
+    return this.#wrap(
+      fetch(this.#BASE_URL + '/user/search', {
+        method: 'POST',
+        body: JSON.stringify({
+          querey: searchWords,
+        }),
+        headers: {
+          ...this.#getHeaders(),
+          'content-type': 'application/json',
+        },
+      })
+      ).then(r => r?.json());
   }
   
   

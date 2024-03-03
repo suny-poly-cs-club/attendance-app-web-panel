@@ -3,3 +3,26 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.clubDropdownContainer {
+  padding: 0.7em 1em;
+  border-radius: 0.6em;
+  width: 32em;
+  font-size: large;
+}
+
+.clubActionButton{
+  padding-left: 2em;
+  padding-right: 2em;
+  
+}
+
+.clubActionButtonContainer{
+  display: flex;
+}
+
+.clubAdminUserList{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

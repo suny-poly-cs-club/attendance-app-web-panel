@@ -30,7 +30,7 @@ const HomePage: FC = () => {
 
   return (
     <div className={styles.centered}>
-      <h1>SUNY Poly CS Club Attendance</h1>
+      <h1>Attendance Admin Pannel</h1>
 
       {isLoggedIn ? (
         <h2>

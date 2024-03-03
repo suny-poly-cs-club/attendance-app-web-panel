@@ -11,6 +11,8 @@ import styles from './ClubDays.module.css';
 import CreateClubDayButton from '../components/CreateClubDay';
 import QRDisplayModalButton from '../components/QRModal';
 
+import {AddClubAdminButton,RemoveClubAdminButton} from '../components/ManageClubAdmins.tsx'
+
 type ClubDayTableData = ClubDay & {
   key: number;
   formattedStartsAt: string;
@@ -50,7 +52,7 @@ function ClubsDropdown({rerender}) {
 
   return (
     <div>
-      <select value={selectedOption} onChange={handleOnChange}>
+      <select value={selectedOption} onChange={handleOnChange} className={styles.clubDropdownContainer}>
         {options.map((option) => (
           <option key={option.id} value={option.id}>
             {option.name}
@@ -138,7 +140,21 @@ const ClubDaysPage: FC = () => {
 
   return (
     <>
-	  <ClubsDropdown rerender={forceReloadData} />
+      <div className={styles.createButtonContainer}>
+        <h1>Club</h1>
+        
+	      <ClubsDropdown rerender={forceReloadData} />
+        
+        <div className={styles.clubActionButtonContainer}>
+          <div className={styles.clubActionButton}>
+            <AddClubAdminButton />
+          </div>
+          
+          <div className={styles.clubActionButton}>
+            <RemoveClubAdminButton />
+          </div>
+        </div>
+      </div>
       <div className={styles.createButtonContainer}>
         <h1>Club Days</h1>
 
