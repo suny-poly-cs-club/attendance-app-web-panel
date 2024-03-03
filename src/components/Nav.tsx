@@ -1,13 +1,25 @@
-import {FC} from 'react';
+import {FC, useState} from 'react';
 import {Menu, Layout, Dropdown} from 'antd';
-import {useAuth} from '../providers/auth';
+import {useAuth,useRest} from '../providers/auth';
 import {Link, useLocation} from 'wouter';
 
 const {Header} = Layout;
 
 const Nav: FC = () => {
+  const rest = useRest();
   const {user, logout} = useAuth();
   const [, setLocation] = useLocation();
+  
+  const [hasClubs, setHasClubs] = useState(false);
+  //if rest has not yet been defined
+  if(rest && user){
+	rest
+	.hasClubs()
+	.then((clubs) => {
+		setHasClubs(clubs);
+	});
+  }
+
 
   // TODO: how do I use this with wouter?
 
@@ -26,7 +38,7 @@ const Nav: FC = () => {
           </Link>
         </Menu.Item>
 
-        {user?.isAdmin && (
+        {/*user?.isAdmin*/hasClubs && (
           <Menu.Item key="/club-days">
             <Link href="/club-days">
               <a>Club Days</a>

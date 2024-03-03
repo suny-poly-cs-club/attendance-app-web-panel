@@ -1,12 +1,13 @@
 import {FC, ReactNode} from 'react';
 import {Redirect} from 'wouter';
 
-import {useAuth} from '../providers/auth';
+import {useAuth, useRest} from '../providers/auth';
 import LoadingPage from '../pages/Loading';
 
-const AuthRoute: FC<{children: ReactNode; requireAdmin?: boolean}> = ({
+const AuthRoute: FC<{children: ReactNode; requireAdmin?: boolean; requireClubs?: boolean}> = ({
   children,
   requireAdmin = false,
+  requireClubs = false,
 }) => {
   const {isLoggedIn, isLoading, user} = useAuth();
 
@@ -18,6 +19,13 @@ const AuthRoute: FC<{children: ReactNode; requireAdmin?: boolean}> = ({
     if (requireAdmin && !user.isAdmin) {
       return <Redirect to="/" />;
     }
+	if(requireClubs){
+		const rest = useRest();
+		if(!rest.getHadClubs){
+			return <Redirect to="/" />;
+		}
+		
+	}
 
     return children;
   }

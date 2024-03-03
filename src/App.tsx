@@ -24,7 +24,7 @@ const App: FC = () => {
         </Route>
 
         <Route path="/club-days">
-          <AuthRoute requireAdmin={true}>
+          <AuthRoute requireClubs={true}>
             <Suspense>
               <ClubDaysPage />
             </Suspense>

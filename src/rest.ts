@@ -19,6 +19,7 @@ export class RestClient {
     this.#token = token;
     this.#on401 = on401;
 	this.selectedClubId = -	1;
+	this.hadClubs = false;
   }
   
   setSelectedClub(id){
@@ -128,6 +129,23 @@ export class RestClient {
         headers: this.#getHeaders(),
       })
     ).then(res => res?.json());
+  }
+  
+  async hasClubs(){
+	const clubs = await this.getClubs();
+	if(!clubs || clubs.length == 0){
+		this.hadClubs = false;
+		return false;
+	}
+	if(this.selectedClubId==-1){
+		this.selectedClubId = clubs[0].id;
+	}
+	this.hadClubs=true;
+	return true;
+  }
+  
+  getHadClubs(){
+	return this.hadClubs;
   }
   
   
