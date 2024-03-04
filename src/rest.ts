@@ -209,6 +209,38 @@ export class RestClient {
       ).then(r => r?.json());
   }
   
+  async getAllClubs(){
+    return this.#wrap(
+      fetch(this.#BASE_URL + `/clubsa`, {
+        headers: this.#getHeaders(),
+      })
+      ).then(r => r?.json());
+  }
+  
+  async createClub(name: string){
+    return this.#wrap(
+      fetch(this.#BASE_URL + '/clubsa', {
+        method: 'POST',
+        body: JSON.stringify({
+          name: name,
+        }),
+        headers: {
+          ...this.#getHeaders(),
+          'content-type': 'application/json',
+        },
+      })
+      ).then(r => r?.json());
+  }
+  
+  async deleteClub(id: number){
+    return this.#wrap(
+      fetch(this.#BASE_URL + `/clubsa/${id}`, {
+        method: 'DELETE',
+        headers: this.#getHeaders(),
+      })
+      ).then(d => d?.json());
+  }
+  
   
 
   /**

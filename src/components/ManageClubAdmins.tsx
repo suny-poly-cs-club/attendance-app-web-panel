@@ -1,7 +1,6 @@
 import {Button} from 'antd';
 import {FC, useCallback, useState} from 'react';
 //import {ClubDay} from '../rest';
-import ViewAttendeesModal from './ViewAttendeesModal';
 import {AddClubAdminsModal,RemoveClubAdminsModal} from './ManageClubAdminsModal.tsx'
 
 //type Props = {

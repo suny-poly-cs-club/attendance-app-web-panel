@@ -10,6 +10,7 @@ import AuthRoute from './components/AuthRoute';
 const ProfilePage = lazy(() => import('./pages/Profile'));
 const HomePage = lazy(() => import('./pages/Home'));
 const ClubDaysPage = lazy(() => import('./pages/ClubDays'));
+const ClubsPage = lazy(()=> import('./pages/Clubs.tsx'))
 
 const App: FC = () => {
   return (
@@ -35,6 +36,22 @@ const App: FC = () => {
           <AuthRoute requireAdmin={true}>
             <Suspense>
               <ProfilePage />
+            </Suspense>
+          </AuthRoute>
+        </Route>
+        
+        <Route path="/clubs">
+          <AuthRoute requireAdmin={true}>
+            <Suspense>
+              <ClubsPage />
+            </Suspense>
+          </AuthRoute>
+        </Route>
+        
+        <Route path="/users">
+          <AuthRoute requireAdmin={true}>
+            <Suspense>
+
             </Suspense>
           </AuthRoute>
         </Route>
