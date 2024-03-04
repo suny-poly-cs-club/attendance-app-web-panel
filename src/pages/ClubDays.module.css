@@ -26,3 +26,12 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.addClubAdminsSearchBox{
+  padding: 0.8em;
+  border-radius: 1em;
+  border-color: lightgrey;
+  width: 22em;
+  border-width: 2px;
+  border-style: solid;
+}

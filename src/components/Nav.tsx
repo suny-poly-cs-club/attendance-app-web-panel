@@ -7,7 +7,7 @@ const {Header} = Layout;
 
 const Nav: FC = () => {
   const rest = useRest();
-  const {user, logout} = useAuth();
+  const {user, logout, isLoggedIn} = useAuth();
   const [, setLocation] = useLocation();
   
   const [hasClubs, setHasClubs] = useState(false);
@@ -38,7 +38,7 @@ const Nav: FC = () => {
           </Link>
         </Menu.Item>
 
-        {/*user?.isAdmin*/hasClubs && (
+        {/*user?.isAdmin*/(hasClubs && isLoggedIn) && (
           <Menu.Item key="/club-days">
             <Link href="/club-days">
               <a>Club Days</a>

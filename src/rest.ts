@@ -25,7 +25,7 @@ export class RestClient {
   }
   
   setSelectedClub(id){
-	this.selectedClubId = id
+    this.selectedClubId = Number(id)
   }
   
   getSelectedClub(){
@@ -168,6 +168,38 @@ export class RestClient {
         method: 'POST',
         body: JSON.stringify({
           querey: searchWords,
+        }),
+        headers: {
+          ...this.#getHeaders(),
+          'content-type': 'application/json',
+        },
+      })
+      ).then(r => r?.json());
+  }
+  
+  async addClubAdmin(userId: number){
+    return this.#wrap(
+      fetch(this.#BASE_URL + '/club/addadmin', {
+        method: 'POST',
+        body: JSON.stringify({
+          userId: userId,
+          clubId: this.selectedClubId,
+        }),
+        headers: {
+          ...this.#getHeaders(),
+          'content-type': 'application/json',
+        },
+      })
+      ).then(r => r?.json());
+  }
+  
+  async removeClubAdmin(userId: number){
+    return this.#wrap(
+      fetch(this.#BASE_URL + '/club/removeadmin', {
+        method: 'POST',
+        body: JSON.stringify({
+          userId: userId,
+          clubId: this.selectedClubId,
         }),
         headers: {
           ...this.#getHeaders(),

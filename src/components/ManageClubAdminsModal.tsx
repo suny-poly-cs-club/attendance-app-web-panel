@@ -1,6 +1,6 @@
 import {FC, useEffect, useState} from 'react';
 import {AuthUser, useRest} from '../providers/auth';
-import {Button, Modal} from 'antd';
+import {Button, Modal, Popconfirm} from 'antd';
 import styles from '../pages/ClubDays.module.css';
 
 type Props = {
@@ -48,12 +48,18 @@ export const AddClubAdminsModal: FC<Props> = ({ open, setOpen}) => {
             >
             <div>
                 {/*search bar here*/}
-                <input placeholder={"Search"} onChange={(event)=>{updateList(event.target.value);}}/>
+                <input placeholder={"Search"} onChange={(event)=>{updateList(event.target.value);}} className={styles.addClubAdminsSearchBox}/>
+                <div className={styles.clubAdminUserList}>
+                    <h3>Name</h3>
+                    <h3>Actions</h3>
+                </div>
                 {admins.length ? (
                     admins.map((a, i) => (
                         <p key={i} className={styles.clubAdminUserList}>
                             {a.firstName} {a.lastName}
-                            <Button  onClick={() =>{}}> Add </Button>
+                            <Button  onClick={() =>{
+                                rest.addClubAdmin(a.id);
+                            }}> Add </Button>
                         </p>
                         //add button here
                         ))
@@ -109,7 +115,19 @@ export const RemoveClubAdminsModal: FC<Props> = ({ open, setOpen}) => {
                     admins.map((a, i) => (
                         <p key={i} className={styles.clubAdminUserList}>
                             {a.firstName} {a.lastName}
-                            <Button danger onClick={() =>{}}> Remove </Button>
+                            <Popconfirm
+                                title="Remove Club Admin"
+                                description={"Are you sure you want to remove "+a.firstName+" "+a.lastName+" from club admins?"}
+                                onConfirm={() =>{
+                                rest.removeClubAdmin(a.id).then( b => {
+                                    rest.getClubAdmins().then(c => setAdmins(c));
+                                });
+                                admins.splice(i, 1);
+                                setAdmins(admins);
+                            }}
+                                >
+                            <Button danger> Remove </Button>
+                            </Popconfirm>
                         </p>
                         //remove button here
                         
