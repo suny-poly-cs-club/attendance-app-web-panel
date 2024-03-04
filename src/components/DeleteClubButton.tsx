@@ -2,10 +2,18 @@ import {Button, Popconfirm} from 'antd';
 import {FC, useCallback} from 'react';
 import {useRest} from '../providers/auth';
 
+
+type Club = {
+    id: number;
+    name: string;
+};
+
 type Props = {
-    clubId: number;
+    clubId: Club;
     rerender: () => void;
 };
+
+
 
 const DeleteClubButton: FC<Props> = ({clubId, rerender}) => {
     const rest = useRest();

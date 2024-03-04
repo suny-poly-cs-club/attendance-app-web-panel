@@ -24,7 +24,7 @@ export class RestClient {
 	  this.hadClubs = false;
   }
   
-  setSelectedClub(id){
+  setSelectedClub(id: number){
     this.selectedClubId = Number(id)
   }
   
@@ -249,7 +249,7 @@ export class RestClient {
       ).then(r => r?.json());
   }
   
-  async makeServiceAdmin(id){
+  async makeServiceAdmin(id: number){
     return this.#wrap(
       fetch(this.#BASE_URL + '/user/addadmin', {
         method: 'POST',
@@ -264,7 +264,7 @@ export class RestClient {
       ).then(r => r?.json());
   }
   
-  async removeServiceAdmin(id){
+  async removeServiceAdmin(id: number){
     return this.#wrap(
       fetch(this.#BASE_URL + '/user/removeadmin', {
         method: 'POST',

@@ -28,7 +28,7 @@ const ClubsPage: FC = () => {
         rest
       .getAllClubs()
       .then(data => {
-          const mappedData = data.map(d => ({
+          const mappedData: ClubTableData[] = data.map((d: Club) => ({
               ...d,
               key: d.id,
           }));

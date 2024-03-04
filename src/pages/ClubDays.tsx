@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {Space, Table, TableColumnsType} from 'antd';
 import dayjs from 'dayjs';
 
@@ -19,9 +19,19 @@ type ClubDayTableData = ClubDay & {
   formattedEndsAt: string;
 };
 
-function ClubsDropdown({rerender}) {
+type Club = {
+  id: number;
+  name: string;
+};
+
+type DropDownProps = {
+  rerender: () => void;
+};
+
+
+const ClubsDropdown: FC<DropDownProps> =  ({rerender}) => {
   const rest = useRest();
-  const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState<Club[]>([]);
   const [selectedOption, setSelectedOption] = useState('');
 
   useEffect(() => {
@@ -42,10 +52,10 @@ function ClubsDropdown({rerender}) {
     fetchData();
   }, []);
 
-  const handleOnChange = (event) => {
+  const handleOnChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
 	//console.log(event.target.value);
-	rest.setSelectedClub(event.target.value);
+    rest.setSelectedClub(Number(event.target.value));
     // Fetch additional data or update content based on selection here
 	rerender();
   };

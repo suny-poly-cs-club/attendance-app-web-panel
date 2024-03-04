@@ -7,12 +7,16 @@ type Props = {
     rerender: () => void;
 };
 
+type CreateClubFormData = {
+    name: string;
+};
+
 const CreateClubButton: FC<Props> = ({rerender}) => {
     const rest = useRest();
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
 
-    const onCreate = async (data) => {
+    const onCreate = async (data : CreateClubFormData) => {
         setConfirmLoading(true);
         
         console.log(await rest.createClub(data.name));

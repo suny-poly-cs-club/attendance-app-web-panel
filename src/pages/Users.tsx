@@ -24,7 +24,7 @@ const UsersPage: FC = () => {
         rest
       .getAllUsers()
       .then(data => {
-          const mappedData = data.map(d => ({
+          const mappedData: UserTableData[] = data.map((d: AuthUser) => ({
               ...d,
               key: d.id,
           }));
