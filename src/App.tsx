@@ -59,7 +59,7 @@ const App: FC = () => {
       </Content>
 
       <Footer style={{textAlign: 'center', marginTop: 'auto'}}>
-        &copy; 2023 SUNY Poly Computer Science Club
+        &copy; 2024 SUNY Poly Computer Science Club
       </Footer>
     </Layout>
   );
