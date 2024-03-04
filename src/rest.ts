@@ -241,6 +241,44 @@ export class RestClient {
       ).then(d => d?.json());
   }
   
+  async getAllUsers(){
+    return this.#wrap(
+      fetch(this.#BASE_URL + `/user/all`, {
+        headers: this.#getHeaders(),
+      })
+      ).then(r => r?.json());
+  }
+  
+  async makeServiceAdmin(id){
+    return this.#wrap(
+      fetch(this.#BASE_URL + '/user/addadmin', {
+        method: 'POST',
+        body: JSON.stringify({
+          userId: id,
+        }),
+        headers: {
+          ...this.#getHeaders(),
+          'content-type': 'application/json',
+        },
+      })
+      ).then(r => r?.json());
+  }
+  
+  async removeServiceAdmin(id){
+    return this.#wrap(
+      fetch(this.#BASE_URL + '/user/removeadmin', {
+        method: 'POST',
+        body: JSON.stringify({
+          userId: id,
+        }),
+        headers: {
+          ...this.#getHeaders(),
+          'content-type': 'application/json',
+        },
+      })
+      ).then(r => r?.json());
+  }
+  
   
 
   /**

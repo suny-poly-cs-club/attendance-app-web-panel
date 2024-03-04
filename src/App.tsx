@@ -11,6 +11,7 @@ const ProfilePage = lazy(() => import('./pages/Profile'));
 const HomePage = lazy(() => import('./pages/Home'));
 const ClubDaysPage = lazy(() => import('./pages/ClubDays'));
 const ClubsPage = lazy(()=> import('./pages/Clubs.tsx'))
+const UsersPage = lazy(() => import('./pages/Users.tsx'))
 
 const App: FC = () => {
   return (
@@ -51,7 +52,7 @@ const App: FC = () => {
         <Route path="/users">
           <AuthRoute requireAdmin={true}>
             <Suspense>
-
+              <UsersPage />
             </Suspense>
           </AuthRoute>
         </Route>
