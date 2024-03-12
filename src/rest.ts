@@ -7,6 +7,11 @@ export type ClubDay = {
   id: number;
 };
 
+export type Club = {
+  id: number;
+  name: string;
+};
+
 export class RestClient {
   #token: string | null;
   #BASE_URL: string = import.meta.env.VITE_API_BASE_URL;
@@ -23,11 +28,11 @@ export class RestClient {
 	  this.selectedClubId = -	1;
 	  this.hadClubs = false;
   }
-  
+
   setSelectedClub(id: number){
     this.selectedClubId = Number(id)
   }
-  
+
   getSelectedClub(){
     return this.selectedClubId;
   }
@@ -111,7 +116,7 @@ export class RestClient {
         body: JSON.stringify({
           startsAt: start.toISOString(),
           endsAt: end.toISOString(),
-		  clubId: this.selectedClubId,
+          clubId: this.selectedClubId,
         }),
         headers: {
           ...this.#getHeaders(),
@@ -128,15 +133,15 @@ export class RestClient {
       })
     ).then(r => r?.json());
   }
-  
-  async getClubs(){
+
+  async getClubs(): Promise<Club[]> {
 	 return this.#wrap(
       fetch(this.#BASE_URL + '/club', {
         headers: this.#getHeaders(),
       })
     ).then(res => res?.json());
   }
-  
+
   async hasClubs(){
 	 const clubs = await this.getClubs();
 	 if(!clubs || clubs.length == 0){
@@ -149,11 +154,11 @@ export class RestClient {
 	 this.hadClubs=true;
 	 return true;
   }
-  
+
   getHadClubs(){
 	 return this.hadClubs;
   }
-  
+
   async getClubAdmins(): Promise<AuthUser[]>{
     return this.#wrap(
       fetch(this.#BASE_URL + `/club/admins/`+this.selectedClubId, {
@@ -161,7 +166,7 @@ export class RestClient {
       })
       ).then(r => r?.json());
   }
-  
+
   async searchUsers(searchWords: string): Promise<AuthUser[]>{
     return this.#wrap(
       fetch(this.#BASE_URL + '/user/search', {
@@ -176,7 +181,7 @@ export class RestClient {
       })
       ).then(r => r?.json());
   }
-  
+
   async addClubAdmin(userId: number){
     return this.#wrap(
       fetch(this.#BASE_URL + '/club/addadmin', {
@@ -192,7 +197,7 @@ export class RestClient {
       })
       ).then(r => r?.json());
   }
-  
+
   async removeClubAdmin(userId: number){
     return this.#wrap(
       fetch(this.#BASE_URL + '/club/removeadmin', {
@@ -208,7 +213,7 @@ export class RestClient {
       })
       ).then(r => r?.json());
   }
-  
+
   async getAllClubs(){
     return this.#wrap(
       fetch(this.#BASE_URL + `/clubsa`, {
@@ -216,7 +221,7 @@ export class RestClient {
       })
       ).then(r => r?.json());
   }
-  
+
   async createClub(name: string){
     return this.#wrap(
       fetch(this.#BASE_URL + '/clubsa', {
@@ -231,7 +236,7 @@ export class RestClient {
       })
       ).then(r => r?.json());
   }
-  
+
   async deleteClub(id: number){
     return this.#wrap(
       fetch(this.#BASE_URL + `/clubsa/${id}`, {
@@ -240,7 +245,7 @@ export class RestClient {
       })
       ).then(d => d?.json());
   }
-  
+
   async getAllUsers(){
     return this.#wrap(
       fetch(this.#BASE_URL + `/user/all`, {
@@ -248,7 +253,7 @@ export class RestClient {
       })
       ).then(r => r?.json());
   }
-  
+
   async makeServiceAdmin(id: number){
     return this.#wrap(
       fetch(this.#BASE_URL + '/user/addadmin', {
@@ -263,7 +268,7 @@ export class RestClient {
       })
       ).then(r => r?.json());
   }
-  
+
   async removeServiceAdmin(id: number){
     return this.#wrap(
       fetch(this.#BASE_URL + '/user/removeadmin', {
@@ -278,8 +283,8 @@ export class RestClient {
       })
       ).then(r => r?.json());
   }
-  
-  
+
+
 
   /**
    * Maps any error to a RestError, and optionally runs a function if the API returns 401

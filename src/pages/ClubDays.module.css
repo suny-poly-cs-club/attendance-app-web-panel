@@ -5,8 +5,8 @@
 }
 
 .clubDropdownContainer {
-  padding: 0.7em 1em;
-  border-radius: 0.6em;
+  /* padding: 0.7em 1em; */
+  /* border-radius: 0.6em; */
   width: 32em;
   font-size: large;
 }
@@ -14,7 +14,6 @@
 .clubActionButton{
   padding-left: 2em;
   padding-right: 2em;
-  
 }
 
 .clubActionButtonContainer{

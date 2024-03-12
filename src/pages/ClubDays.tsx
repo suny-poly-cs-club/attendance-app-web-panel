@@ -1,5 +1,5 @@
-import React, {FC, useEffect, useState} from 'react';
-import {Space, Table, TableColumnsType} from 'antd';
+import {FC, useEffect, useState} from 'react';
+import {Flex, Space, Table, TableColumnsType, Select, Row, Col} from 'antd';
 import dayjs from 'dayjs';
 
 import {ClubDay} from '../rest';
@@ -11,7 +11,7 @@ import styles from './ClubDays.module.css';
 import CreateClubDayButton from '../components/CreateClubDay';
 import QRDisplayModalButton from '../components/QRModal';
 
-import {AddClubAdminButton,RemoveClubAdminButton} from '../components/ManageClubAdmins.tsx'
+import {AddClubAdminButton, RemoveClubAdminButton} from '../components/ManageClubAdmins.tsx'
 
 type ClubDayTableData = ClubDay & {
   key: number;
@@ -25,53 +25,41 @@ type Club = {
 };
 
 type DropDownProps = {
-  rerender: () => void;
+  onSelect: (club: Club) => void;
 };
 
 
-const ClubsDropdown: FC<DropDownProps> =  ({rerender}) => {
+const ClubsDropdown: FC<DropDownProps> =  ({onSelect}) => {
   const rest = useRest();
-  const [options, setOptions] = useState<Club[]>([]);
-  const [selectedOption, setSelectedOption] = useState('');
+  const [clubList, setClubList] = useState<Club[]>([]);
+  const [selectedClub, setSelectedClub] = useState<number | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-	//get the list of clubs from the server
-      const response = await rest.getClubs();
-	  if(response){
-		setOptions(response);
-		if(response.length!=0){
-		//set the initial select optio to the first one on te list
-			setSelectedOption(response[0].id);
-			rest.setSelectedClub(response[0].id);
-			rerender();
-		}
-	  }
-    };
-
-    fetchData();
+    rest.getClubs()
+      .then(clubs => {
+        setClubList(clubs);
+        setSelectedClub(clubs[0].id);
+      });
   }, []);
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(event.target.value);
-	//console.log(event.target.value);
-    rest.setSelectedClub(Number(event.target.value));
-    // Fetch additional data or update content based on selection here
-	rerender();
+  const onChange = (value: number) => {
+    const club = clubList.find(c => c.id === value)!;
+    setSelectedClub(value);
+    onSelect(club);
+    rest.setSelectedClub(value)
   };
 
   return (
-    <div>
-      <select value={selectedOption} onChange={handleOnChange} className={styles.clubDropdownContainer}>
-        {options.map((option) => (
-          <option key={option.id} value={option.id}>
-            {option.name}
-          </option>
-        ))}
-      </select>
-      {/* Update content based on selectedOption here */}
-    </div>
-  );
+    <Select
+      className={styles.clubDropdownContainer}
+      showSearch
+      placeholder="Select a Club"
+      optionFilterProp="children"
+      onChange={onChange}
+      options={clubList.map(c => ({label: c.name, value: c.id}))}
+      value={selectedClub}
+    />
+  )
 }
 
 const ClubDaysPage: FC = () => {
@@ -79,11 +67,11 @@ const ClubDaysPage: FC = () => {
 
   const rest = useRest();
   const [data, setData] = useState<ClubDayTableData[]>([]);
+  // FIXME: null! is bad lol
+  const [selectedClub, setSelectedClub] = useState<Club>(null!);
 
   const [update, _setUpdate] = useState(false);
   const forceReloadData = () => _setUpdate(s => !s);
-  
-  
 
   useEffect(() => {
     rest
@@ -98,7 +86,7 @@ const ClubDaysPage: FC = () => {
         setData(mappedData);
       })
       .finally(() => setIsLoading(false));
-  }, [update]);
+  }, [update, selectedClub]);
 
   const columns: TableColumnsType<ClubDayTableData> = [
     {
@@ -150,29 +138,28 @@ const ClubDaysPage: FC = () => {
 
   return (
     <>
-      <div className={styles.createButtonContainer}>
-        <h1>Club</h1>
-        
-	      <ClubsDropdown rerender={forceReloadData} />
-        
-        <div className={styles.clubActionButtonContainer}>
-          <div className={styles.clubActionButton}>
-            <AddClubAdminButton />
-          </div>
-          
-          <div className={styles.clubActionButton}>
-            <RemoveClubAdminButton />
-          </div>
-        </div>
-      </div>
-      <div className={styles.createButtonContainer}>
-        <h1>Club Days</h1>
+      <Flex align="center" justify="space-between">
+        <h1>Manage Club Days</h1>
+        <CreateClubDayButton rerender={forceReloadData} />
+      </Flex>
 
-        <div>
-          <CreateClubDayButton rerender={forceReloadData} />
-        </div>
-      </div>
-	  
+      <Row align="middle">
+        <Col span={8}>
+          <h2>Club</h2>
+        </Col>
+
+        <Col span={8}>
+          <ClubsDropdown onSelect={setSelectedClub} />
+        </Col>
+
+        <Col span={8}>
+          <Flex gap="small" style={{justifyContent: 'flex-end'}}>
+            <AddClubAdminButton />
+            <RemoveClubAdminButton />
+          </Flex>
+        </Col>
+      </Row>
+
 
       <Table columns={columns} dataSource={data} loading={isLoading} />
     </>
