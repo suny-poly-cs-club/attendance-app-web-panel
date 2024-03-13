@@ -1,16 +1,17 @@
 import {Button, Modal} from 'antd';
 import {FC, useEffect, useRef, useState} from 'react';
-import {ClubDay} from '../rest';
+import {Club, ClubDay} from '../rest';
 import {useRest} from '../providers/auth';
 import qr from 'qrcode';
 
 import styles from './QRModal.module.css';
 
 type ButtonProps = {
+  club: Club;
   clubDay: ClubDay;
 };
 
-const QRDisplayModalButton: FC<ButtonProps> = ({clubDay}) => {
+const QRDisplayModalButton: FC<ButtonProps> = ({club, clubDay}) => {
   const [open, setOpen] = useState(false);
 
   const onCancel = () => {
@@ -28,18 +29,19 @@ const QRDisplayModalButton: FC<ButtonProps> = ({clubDay}) => {
       >
         Open QR
       </Button>
-      <QRDisplayModal clubDay={clubDay} open={open} onCancel={onCancel} />
+      <QRDisplayModal club={club} clubDay={clubDay} open={open} onCancel={onCancel} />
     </>
   );
 };
 
 type ModalProps = {
+  club: Club;
   clubDay: ClubDay;
   open: boolean;
   onCancel: () => void;
 };
 
-const QRDisplayModal: FC<ModalProps> = ({clubDay, open, onCancel}) => {
+const QRDisplayModal: FC<ModalProps> = ({club, clubDay, open, onCancel}) => {
   const rest = useRest();
   const ref = useRef<HTMLImageElement>(null);
   const [qrData, setQrData] = useState<string | null>(null);
@@ -49,7 +51,7 @@ const QRDisplayModal: FC<ModalProps> = ({clubDay, open, onCancel}) => {
       return;
     }
 
-    rest.getClubDayQRToken(clubDay.id).then(token => {
+    rest.getClubDayQRToken(club.id, clubDay.id).then(token => {
       qr.toString(token.token, {type: 'svg'}).then(qrSvg => {
         const dataURL = `data:image/svg+xml;utf8,${encodeURIComponent(qrSvg)}`;
         setQrData(dataURL);

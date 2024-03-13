@@ -3,12 +3,14 @@ import {FC, useState} from 'react';
 import CreateClubDayModal from './CreateClubDayModal';
 import {useRest} from '../providers/auth';
 import {Dayjs} from 'dayjs';
+import { Club } from '../rest';
 
 type Props = {
   rerender: () => void;
+  club: Club;
 };
 
-const CreateClubDayButton: FC<Props> = ({rerender}) => {
+const CreateClubDayButton: FC<Props> = ({club, rerender}) => {
   const rest = useRest();
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -19,7 +21,7 @@ const CreateClubDayButton: FC<Props> = ({rerender}) => {
     const startsAt = range[0].toDate();
     const endsAt = range[1].toDate();
 
-    console.log(await rest.createClubDay(startsAt, endsAt));
+    console.log(await rest.createClubDay(club.id, startsAt, endsAt));
 
     rerender();
 

@@ -1,43 +1,61 @@
 import {Button} from 'antd';
 import {FC, useCallback, useState} from 'react';
 //import {ClubDay} from '../rest';
-import {AddClubAdminsModal,RemoveClubAdminsModal} from './ManageClubAdminsModal.tsx'
+import {AddClubAdminsModal,ManageClubAdminsModal,RemoveClubAdminsModal} from './ManageClubAdminsModal.tsx'
+import { Club } from '../rest.ts';
 
-//type Props = {
-//    clubDay: ClubDay;
-//};
-
-export const AddClubAdminButton: FC = () => {
-    const [open, setOpen] = useState(false);
-
-    const onClick = useCallback(() => {
-        setOpen(true);
-        },[]);
-
-    return (
-        <>
-        <Button type="primary" onClick={onClick}>
-            Add Admins
-        </Button>
-        <AddClubAdminsModal open={open} setOpen={setOpen} />
-        </>
-        );
+type Props = {
+  club: Club;
 };
 
-export const RemoveClubAdminButton: FC = () => {
-    const [open, setOpen] = useState(false);
+export const ManageClubAdminButton: FC<Props> = ({club}) => {
+  const [open, setOpen] = useState(false);
 
-    const onClick = useCallback(() => {
-        setOpen(true);
-        }, []);
+  const onClick = useCallback(() => {
+    setOpen(true);
+  },[]);
 
-    return (
-        <>
-        <Button danger onClick={onClick}>
-            Remove Admins
-        </Button>
-        <RemoveClubAdminsModal open={open} setOpen={setOpen}  />
-        </>
-        );
+  return (
+    <>
+      <Button type="primary" onClick={onClick}>
+        Manage Admins
+      </Button>
+      <ManageClubAdminsModal club={club} open={open} setOpen={setOpen} />
+    </>
+  );
+};
+
+export const AddClubAdminButton: FC<Props> = ({club}) => {
+  const [open, setOpen] = useState(false);
+
+  const onClick = useCallback(() => {
+    setOpen(true);
+  },[]);
+
+  return (
+    <>
+      <Button type="primary" onClick={onClick}>
+        Add Admins
+      </Button>
+      <AddClubAdminsModal club={club} open={open} setOpen={setOpen} />
+    </>
+  );
+};
+
+export const RemoveClubAdminButton: FC<Props> = ({club}) => {
+  const [open, setOpen] = useState(false);
+
+  const onClick = useCallback(() => {
+    setOpen(true);
+  }, []);
+
+  return (
+    <>
+      <Button danger onClick={onClick}>
+        Remove Admins
+      </Button>
+      <RemoveClubAdminsModal club={club} open={open} setOpen={setOpen}  />
+    </>
+  );
 };
 

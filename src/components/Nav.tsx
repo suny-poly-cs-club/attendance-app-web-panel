@@ -9,15 +9,15 @@ const Nav: FC = () => {
   const rest = useRest();
   const {user, logout, isLoggedIn} = useAuth();
   const [, setLocation] = useLocation();
-  
+
   const [hasClubs, setHasClubs] = useState(false);
   //if rest has not yet been defined
   if(rest && user){
-	rest
-	.hasClubs()
-	.then((clubs) => {
-		setHasClubs(clubs);
-	});
+    rest
+      .hasClubs()
+      .then((clubs) => {
+        setHasClubs(clubs);
+      });
   }
 
 
@@ -45,25 +45,25 @@ const Nav: FC = () => {
             </Link>
           </Menu.Item>
         )}
-        
+
         {user?.isAdmin && (
           <Menu.Item key="/clubs">
             <Link href="/clubs">
               <a>Clubs</a>
             </Link>
           </Menu.Item>
-          )}
-        
+        )}
+
         {user?.isAdmin && (
           <Menu.Item key="/users">
             <Link href="/users">
               <a>Users</a>
             </Link>
           </Menu.Item>
-          )}
+        )}
       </Menu>
-      
-      
+
+
       {user && (
         <Dropdown
           menu={{

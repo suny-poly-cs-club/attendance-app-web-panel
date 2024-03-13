@@ -34,20 +34,21 @@ const ClubsDropdown: FC<DropDownProps> =  ({onSelect}) => {
   const [clubList, setClubList] = useState<Club[]>([]);
   const [selectedClub, setSelectedClub] = useState<number | null>(null);
 
+  const onChange = (value: number) => {
+    const club = clubList.find(c => c.id === value)!;
+    setSelectedClub(value);
+    onSelect(club);
+  };
+
   useEffect(() => {
     rest.getClubs()
       .then(clubs => {
         setClubList(clubs);
         setSelectedClub(clubs[0].id);
+        // TODO: is there a better way to do this?
+        onSelect(clubs[0]);
       });
   }, []);
-
-  const onChange = (value: number) => {
-    const club = clubList.find(c => c.id === value)!;
-    setSelectedClub(value);
-    onSelect(club);
-    rest.setSelectedClub(value)
-  };
 
   return (
     <Select
@@ -63,7 +64,7 @@ const ClubsDropdown: FC<DropDownProps> =  ({onSelect}) => {
 }
 
 const ClubDaysPage: FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const rest = useRest();
   const [data, setData] = useState<ClubDayTableData[]>([]);
@@ -74,8 +75,15 @@ const ClubDaysPage: FC = () => {
   const forceReloadData = () => _setUpdate(s => !s);
 
   useEffect(() => {
+    console.log(selectedClub);
+    if (!selectedClub) {
+      return;
+    }
+
+    setIsLoading(true);
+
     rest
-      .getClubDays()
+      .getClubDays(selectedClub.id)
       .then(data => {
         const mappedData = data.map(d => ({
           ...d,
@@ -125,11 +133,11 @@ const ClubDaysPage: FC = () => {
       render: (_, day) => (
         <>
           <Space>
-            <QRDisplayModalButton clubDay={day} />
+            <QRDisplayModalButton club={selectedClub} clubDay={day} />
 
-            <ViewAttendeesButton clubDay={day} />
+            <ViewAttendeesButton club={selectedClub} clubDay={day} />
 
-            <DeleteClubDayButton clubDay={day} rerender={forceReloadData} />
+            <DeleteClubDayButton club={selectedClub} clubDay={day} rerender={forceReloadData} />
           </Space>
         </>
       ),
@@ -140,7 +148,7 @@ const ClubDaysPage: FC = () => {
     <>
       <Flex align="center" justify="space-between">
         <h1>Manage Club Days</h1>
-        <CreateClubDayButton rerender={forceReloadData} />
+        <CreateClubDayButton club={selectedClub} rerender={forceReloadData} />
       </Flex>
 
       <Row align="middle">
@@ -154,8 +162,8 @@ const ClubDaysPage: FC = () => {
 
         <Col span={8}>
           <Flex gap="small" style={{justifyContent: 'flex-end'}}>
-            <AddClubAdminButton />
-            <RemoveClubAdminButton />
+            <AddClubAdminButton club={selectedClub} />
+            <RemoveClubAdminButton club={selectedClub} />
           </Flex>
         </Col>
       </Row>

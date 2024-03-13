@@ -25,7 +25,7 @@ export class RestClient {
   ) {
     this.#token = token;
     this.#on401 = on401;
-	  this.selectedClubId = -	1;
+	  this.selectedClubId = -1;
 	  this.hadClubs = false;
   }
 
@@ -84,39 +84,39 @@ export class RestClient {
     ).then(res => res?.json());
   }
 
-  async getClubDays(): Promise<ClubDay[]> {
+  async getClubDays(clubID: number): Promise<ClubDay[]> {
+    // TODO: get rid of selectedclubid
     return this.#wrap(
-      fetch(this.#BASE_URL + '/club-days?clubId='+this.selectedClubId, {
+      fetch(this.#buildURL('clubs', clubID, 'club-days'), {
         headers: this.#getHeaders(),
       })
     ).then(r => r?.json());
   }
 
-  async getAttendees(id: number): Promise<AuthUser[]> {
+  async getAttendees(clubID: number, clubDayID: number): Promise<AuthUser[]> {
     return this.#wrap(
-      fetch(this.#BASE_URL + `/club-days/${id}/attendees?clubId=`+this.selectedClubId, {
+      fetch(this.#buildURL('clubs', clubID, 'club-days', clubDayID, 'attendees'), {
         headers: this.#getHeaders(),
       })
     ).then(r => r?.json());
   }
 
-  async deleteClubDay(id: number): Promise<ClubDay> {
+  async deleteClubDay(clubID: number, clubDayID: number): Promise<ClubDay> {
     return this.#wrap(
-      fetch(this.#BASE_URL + `/club-days/${id}?clubId=`+this.selectedClubId, {
+      fetch(this.#buildURL('clubs', clubID, 'club-days', clubDayID), {
         method: 'DELETE',
         headers: this.#getHeaders(),
       })
     ).then(d => d?.json());
   }
 
-  async createClubDay(start: Date, end: Date) {
+  async createClubDay(clubID: number, start: Date, end: Date) {
     return this.#wrap(
-      fetch(this.#BASE_URL + '/club-days', {
+      fetch(this.#buildURL('clubs', clubID, 'club-days'), {
         method: 'POST',
         body: JSON.stringify({
           startsAt: start.toISOString(),
           endsAt: end.toISOString(),
-          clubId: this.selectedClubId,
         }),
         headers: {
           ...this.#getHeaders(),
@@ -126,9 +126,9 @@ export class RestClient {
     ).then(r => r?.json());
   }
 
-  async getClubDayQRToken(id: number): Promise<{token: string}> {
+  async getClubDayQRToken(clubID: number, clubDayID: number): Promise<{token: string}> {
     return this.#wrap(
-      fetch(this.#BASE_URL + `/club-days/${id}/qr-token?clubId=`+this.selectedClubId, {
+      fetch(this.#buildURL('clubs', clubID, 'club-days', clubDayID, 'qr-token'), {
         headers: this.#getHeaders(),
       })
     ).then(r => r?.json());
@@ -136,35 +136,35 @@ export class RestClient {
 
   async getClubs(): Promise<Club[]> {
 	 return this.#wrap(
-      fetch(this.#BASE_URL + '/club', {
+      fetch(this.#buildURL('clubs'), {
         headers: this.#getHeaders(),
       })
     ).then(res => res?.json());
   }
 
   async hasClubs(){
-	 const clubs = await this.getClubs();
-	 if(!clubs || clubs.length == 0){
-	 	this.hadClubs = false;
-	 	return false;
-	 }
-	 if(this.selectedClubId==-1){
-	 	this.selectedClubId = clubs[0].id;
-	 }
-	 this.hadClubs=true;
-	 return true;
+    const clubs = await this.getClubs();
+    if(!clubs || clubs.length == 0){
+      this.hadClubs = false;
+      return false;
+    }
+    if(this.selectedClubId==-1){
+      this.selectedClubId = clubs[0].id;
+    }
+    this.hadClubs=true;
+    return true;
   }
 
   getHadClubs(){
 	 return this.hadClubs;
   }
 
-  async getClubAdmins(): Promise<AuthUser[]>{
+  async getClubAdmins(clubID: number): Promise<AuthUser[]>{
     return this.#wrap(
-      fetch(this.#BASE_URL + `/club/admins/`+this.selectedClubId, {
+      fetch(this.#buildURL('clubs', clubID, 'admins'), {
         headers: this.#getHeaders(),
       })
-      ).then(r => r?.json());
+    ).then(r => r?.json());
   }
 
   async searchUsers(searchWords: string): Promise<AuthUser[]>{
@@ -182,13 +182,12 @@ export class RestClient {
       ).then(r => r?.json());
   }
 
-  async addClubAdmin(userId: number){
+  async addClubAdmin(clubId: number, userId: number){
     return this.#wrap(
-      fetch(this.#BASE_URL + '/club/addadmin', {
+      fetch(this.#buildURL('clubs', clubId, 'admins'), {
         method: 'POST',
         body: JSON.stringify({
-          userId: userId,
-          clubId: this.selectedClubId,
+          userId,
         }),
         headers: {
           ...this.#getHeaders(),
@@ -198,13 +197,12 @@ export class RestClient {
       ).then(r => r?.json());
   }
 
-  async removeClubAdmin(userId: number){
+  async removeClubAdmin(clubId: number, userId: number){
     return this.#wrap(
-      fetch(this.#BASE_URL + '/club/removeadmin', {
-        method: 'POST',
+      fetch(this.#buildURL('clubs', clubId, 'admins'), {
+        method: 'DELETE',
         body: JSON.stringify({
-          userId: userId,
-          clubId: this.selectedClubId,
+          userId,
         }),
         headers: {
           ...this.#getHeaders(),
@@ -216,7 +214,7 @@ export class RestClient {
 
   async getAllClubs(){
     return this.#wrap(
-      fetch(this.#BASE_URL + `/clubsa`, {
+      fetch(this.#BASE_URL + `/clubs`, {
         headers: this.#getHeaders(),
       })
       ).then(r => r?.json());
@@ -224,7 +222,7 @@ export class RestClient {
 
   async createClub(name: string){
     return this.#wrap(
-      fetch(this.#BASE_URL + '/clubsa', {
+      fetch(this.#BASE_URL + '/clubs', {
         method: 'POST',
         body: JSON.stringify({
           name: name,
@@ -237,18 +235,18 @@ export class RestClient {
       ).then(r => r?.json());
   }
 
-  async deleteClub(id: number){
+  async deleteClub(clubID: number){
     return this.#wrap(
-      fetch(this.#BASE_URL + `/clubsa/${id}`, {
+      fetch(this.#buildURL('clubs', clubID), {
         method: 'DELETE',
         headers: this.#getHeaders(),
       })
       ).then(d => d?.json());
   }
 
-  async getAllUsers(){
+  async getAllUsers(): Promise<AuthUser[]>{
     return this.#wrap(
-      fetch(this.#BASE_URL + `/user/all`, {
+      fetch(this.#buildURL('users'), {
         headers: this.#getHeaders(),
       })
       ).then(r => r?.json());
@@ -311,6 +309,13 @@ export class RestClient {
 
   #getHeaders(): Record<string, string> {
     return this.#token ? {Authorization: this.#token} : {};
+  }
+
+  /**
+   * Safely build a URL from parts
+   */
+  #buildURL(...parts: (string | number)[]) {
+    return new URL(parts.join('/'), this.#BASE_URL);
   }
 }
 

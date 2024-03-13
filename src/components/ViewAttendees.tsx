@@ -1,13 +1,14 @@
 import {Button} from 'antd';
 import {FC, useCallback, useState} from 'react';
-import {ClubDay} from '../rest';
+import {Club, ClubDay} from '../rest';
 import ViewAttendeesModal from './ViewAttendeesModal';
 
 type Props = {
+  club: Club;
   clubDay: ClubDay;
 };
 
-const ViewAttendeesButton: FC<Props> = ({clubDay}) => {
+const ViewAttendeesButton: FC<Props> = ({club, clubDay}) => {
   const [open, setOpen] = useState(false);
 
   const onClick = useCallback(() => {
@@ -19,7 +20,7 @@ const ViewAttendeesButton: FC<Props> = ({clubDay}) => {
       <Button type="primary" onClick={onClick}>
         View Attendees
       </Button>
-      <ViewAttendeesModal open={open} setOpen={setOpen} clubDay={clubDay} />
+      <ViewAttendeesModal open={open} setOpen={setOpen} clubDay={clubDay} club={club} />
     </>
   );
 };
