@@ -28,36 +28,37 @@ const ViewAttendeesModal: FC<Props> = ({club, clubDay, open, setOpen}) => {
     <>
       <Modal
         open={open}
-        footer={[
-          attendees.length > 0 && (
-            <>
-            <Button
-              type="default"
-              onClick={() => {
-                downloadFile('attendance.txt', {
-                  data:
-                    attendees.map(a => `${a.firstName} ${a.lastName}`).join('\n'),
-                  type: 'application/json',
-                });
-              }}
-              key="download_button"
-            >
-              Download Attendees
-            </Button>
-              <Button
-              type="default"
-              onClick={() => {
-                downloadFile('attendance.json', {
-                  data: JSON.stringify(attendees, null, 2),
-                  type: 'application/json',
-                });
-              }}
-              key="download_button"
-            >
-              Download JSON
-            </Button>
-            </>
-          ),
+        footer={() => [
+          ...(attendees.length > 0
+            ? [
+                <Button
+                  type="default"
+                  onClick={() => {
+                    downloadFile('attendance.txt', {
+                      data: attendees
+                        .map(a => `${a.firstName} ${a.lastName}`)
+                        .join('\n'),
+                      type: 'application/json',
+                    });
+                  }}
+                  key="download_txt"
+                >
+                  Download Attendees
+                </Button>,
+                <Button
+                  type="default"
+                  onClick={() => {
+                    downloadFile('attendance.json', {
+                      data: JSON.stringify(attendees, null, 2),
+                      type: 'application/json',
+                    });
+                  }}
+                  key="download_json"
+                >
+                  Download JSON
+                </Button>,
+              ]
+            : []),
 
           <Button
             type="primary"

@@ -10,8 +10,8 @@ import AuthRoute from './components/AuthRoute';
 const ProfilePage = lazy(() => import('./pages/Profile'));
 const HomePage = lazy(() => import('./pages/Home'));
 const ClubDaysPage = lazy(() => import('./pages/ClubDays'));
-const ClubsPage = lazy(()=> import('./pages/Clubs.tsx'))
-const UsersPage = lazy(() => import('./pages/Users.tsx'))
+const ClubsPage = lazy(() => import('./pages/Clubs.tsx'));
+const UsersPage = lazy(() => import('./pages/Users.tsx'));
 
 const App: FC = () => {
   return (
@@ -26,7 +26,7 @@ const App: FC = () => {
         </Route>
 
         <Route path="/club-days">
-          <AuthRoute requireClubs={true}>
+          <AuthRoute requireAdmin={true}>
             <Suspense>
               <ClubDaysPage />
             </Suspense>
@@ -40,7 +40,7 @@ const App: FC = () => {
             </Suspense>
           </AuthRoute>
         </Route>
-        
+
         <Route path="/clubs">
           <AuthRoute requireAdmin={true}>
             <Suspense>
@@ -48,7 +48,7 @@ const App: FC = () => {
             </Suspense>
           </AuthRoute>
         </Route>
-        
+
         <Route path="/users">
           <AuthRoute requireAdmin={true}>
             <Suspense>

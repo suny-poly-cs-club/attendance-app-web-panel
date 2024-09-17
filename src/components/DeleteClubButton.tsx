@@ -1,7 +1,7 @@
 import {Button, Popconfirm} from 'antd';
 import {FC, useCallback} from 'react';
 import {useRest} from '../providers/auth';
-import { Club } from '../rest';
+import {Club} from '../rest';
 
 type ClubTableData = Club & {key: number};
 

@@ -29,7 +29,12 @@ const QRDisplayModalButton: FC<ButtonProps> = ({club, clubDay}) => {
       >
         Open QR
       </Button>
-      <QRDisplayModal club={club} clubDay={clubDay} open={open} onCancel={onCancel} />
+      <QRDisplayModal
+        club={club}
+        clubDay={clubDay}
+        open={open}
+        onCancel={onCancel}
+      />
     </>
   );
 };

@@ -3,7 +3,7 @@ import {FC, useState} from 'react';
 import CreateClubDayModal from './CreateClubDayModal';
 import {useRest} from '../providers/auth';
 import {Dayjs} from 'dayjs';
-import { Club } from '../rest';
+import {Club} from '../rest';
 
 type Props = {
   rerender: () => void;

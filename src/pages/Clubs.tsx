@@ -1,11 +1,11 @@
 import {FC, useEffect, useState} from 'react';
 import {Flex, Table, TableColumnsType} from 'antd';
 
-import { useRest} from '../providers/auth';
+import {useRest} from '../providers/auth';
 import styles from './ClubDays.module.css';
-import CreateClubButton from '../components/CreateClub.tsx'
-import DeleteClubButton from '../components/DeleteClubButton.tsx'
-import { ManageClubAdminButton } from '../components/ManageClubAdmins.tsx';
+import CreateClubButton from '../components/CreateClub.tsx';
+import DeleteClubButton from '../components/DeleteClubButton.tsx';
+import {ManageClubAdminButton} from '../components/ManageClubAdmins.tsx';
 
 type Club = {
   id: number;
@@ -48,9 +48,7 @@ const ClubsPage: FC = () => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (_, day) => (
-        <p>{day.name}</p>
-      ),
+      render: (_, day) => <p>{day.name}</p>,
     },
 
     {
@@ -65,7 +63,6 @@ const ClubsPage: FC = () => {
     },
   ];
 
-
   return (
     <>
       <div className={styles.createButtonContainer}>
@@ -78,7 +75,7 @@ const ClubsPage: FC = () => {
 
       <Table columns={columns} dataSource={data} loading={isLoading} />
     </>
-  )
+  );
 };
 
-export default ClubsPage
+export default ClubsPage;

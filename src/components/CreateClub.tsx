@@ -2,7 +2,7 @@ import {Button} from 'antd';
 import {FC, useState} from 'react';
 import CreateClubModal from './CreateClubModal';
 import {useRest} from '../providers/auth';
-import { Club } from '../rest';
+import {Club} from '../rest';
 
 type ClubTableData = Club & {key: number};
 
@@ -19,10 +19,11 @@ const CreateClubButton: FC<Props> = ({setClubs}) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
 
-  const onCreate = async (data : CreateClubFormData) => {
+  const onCreate = async (data: CreateClubFormData) => {
     setConfirmLoading(true);
 
-    await rest.createClub(data.name)
+    await rest
+      .createClub(data.name)
       .then(c => setClubs(clubs => clubs.concat({...c, key: c.id})));
 
     setConfirmLoading(false);

@@ -1,6 +1,6 @@
 import {FC, useState} from 'react';
 import {Menu, Layout, Dropdown} from 'antd';
-import {useAuth,useRest} from '../providers/auth';
+import {useAuth, useRest} from '../providers/auth';
 import {Link, useLocation} from 'wouter';
 
 const {Header} = Layout;
@@ -10,16 +10,13 @@ const Nav: FC = () => {
   const {user, logout, isLoggedIn} = useAuth();
   const [, setLocation] = useLocation();
 
-  const [hasClubs, setHasClubs] = useState(false);
-  //if rest has not yet been defined
-  if(rest && user){
-    rest
-      .hasClubs()
-      .then((clubs) => {
-        setHasClubs(clubs);
-      });
-  }
-
+  // const [hasClubs, setHasClubs] = useState(false);
+  // //if rest has not yet been defined
+  // if (rest && user) {
+  //   rest.hasClubs().then(clubs => {
+  //     setHasClubs(clubs);
+  //   });
+  // }
 
   // TODO: how do I use this with wouter?
 
@@ -38,31 +35,28 @@ const Nav: FC = () => {
           </Link>
         </Menu.Item>
 
-        {/*user?.isAdmin*/(hasClubs && isLoggedIn) && (
-          <Menu.Item key="/club-days">
-            <Link href="/club-days">
-              <a>Club Days</a>
-            </Link>
-          </Menu.Item>
-        )}
-
         {user?.isAdmin && (
-          <Menu.Item key="/clubs">
-            <Link href="/clubs">
-              <a>Clubs</a>
-            </Link>
-          </Menu.Item>
-        )}
+          <>
+            <Menu.Item key="/club-days">
+              <Link href="/club-days">
+                <a>Club Days</a>
+              </Link>
+            </Menu.Item>
 
-        {user?.isAdmin && (
-          <Menu.Item key="/users">
-            <Link href="/users">
-              <a>Users</a>
-            </Link>
-          </Menu.Item>
+            <Menu.Item key="/clubs">
+              <Link href="/clubs">
+                <a>Clubs</a>
+              </Link>
+            </Menu.Item>
+
+            <Menu.Item key="/users">
+              <Link href="/users">
+                <a>Users</a>
+              </Link>
+            </Menu.Item>
+          </>
         )}
       </Menu>
-
 
       {user && (
         <Dropdown

@@ -11,7 +11,7 @@ import styles from './ClubDays.module.css';
 import CreateClubDayButton from '../components/CreateClubDay';
 import QRDisplayModalButton from '../components/QRModal';
 
-import {AddClubAdminButton, ManageClubAdminButton, RemoveClubAdminButton} from '../components/ManageClubAdmins.tsx'
+import {ManageClubAdminButton} from '../components/ManageClubAdmins.tsx';
 
 type ClubDayTableData = ClubDay & {
   key: number;
@@ -28,8 +28,7 @@ type DropDownProps = {
   onSelect: (club: Club) => void;
 };
 
-
-const ClubsDropdown: FC<DropDownProps> =  ({onSelect}) => {
+const ClubsDropdown: FC<DropDownProps> = ({onSelect}) => {
   const rest = useRest();
   const [clubList, setClubList] = useState<Club[]>([]);
   const [selectedClub, setSelectedClub] = useState<number | null>(null);
@@ -41,13 +40,12 @@ const ClubsDropdown: FC<DropDownProps> =  ({onSelect}) => {
   };
 
   useEffect(() => {
-    rest.getClubs()
-      .then(clubs => {
-        setClubList(clubs);
-        setSelectedClub(clubs[0].id);
-        // TODO: is there a better way to do this?
-        onSelect(clubs[0]);
-      });
+    rest.getClubs().then(clubs => {
+      setClubList(clubs);
+      setSelectedClub(clubs[0].id);
+      // TODO: is there a better way to do this?
+      onSelect(clubs[0]);
+    });
   }, []);
 
   return (
@@ -60,8 +58,8 @@ const ClubsDropdown: FC<DropDownProps> =  ({onSelect}) => {
       options={clubList.map(c => ({label: c.name, value: c.id}))}
       value={selectedClub}
     />
-  )
-}
+  );
+};
 
 const ClubDaysPage: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -137,7 +135,11 @@ const ClubDaysPage: FC = () => {
 
             <ViewAttendeesButton club={selectedClub} clubDay={day} />
 
-            <DeleteClubDayButton club={selectedClub} clubDay={day} rerender={forceReloadData} />
+            <DeleteClubDayButton
+              club={selectedClub}
+              clubDay={day}
+              rerender={forceReloadData}
+            />
           </Space>
         </>
       ),
@@ -168,7 +170,6 @@ const ClubDaysPage: FC = () => {
           </Flex>
         </Col>
       </Row>
-
 
       <Table columns={columns} dataSource={data} loading={isLoading} />
     </>

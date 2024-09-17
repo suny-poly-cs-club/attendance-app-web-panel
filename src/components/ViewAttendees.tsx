@@ -20,7 +20,12 @@ const ViewAttendeesButton: FC<Props> = ({club, clubDay}) => {
       <Button type="primary" onClick={onClick}>
         View Attendees
       </Button>
-      <ViewAttendeesModal open={open} setOpen={setOpen} clubDay={clubDay} club={club} />
+      <ViewAttendeesModal
+        open={open}
+        setOpen={setOpen}
+        clubDay={clubDay}
+        club={club}
+      />
     </>
   );
 };

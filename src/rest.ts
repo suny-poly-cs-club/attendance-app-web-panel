@@ -16,8 +16,6 @@ export class RestClient {
   #token: string | null;
   #BASE_URL: string = import.meta.env.VITE_API_BASE_URL;
   #on401: (res: Response) => void | Promise<void> | boolean | Promise<boolean>;
-  selectedClubId: number;
-  hadClubs: boolean;
 
   constructor(
     token: string | null,
@@ -25,16 +23,6 @@ export class RestClient {
   ) {
     this.#token = token;
     this.#on401 = on401;
-	  this.selectedClubId = -1;
-	  this.hadClubs = false;
-  }
-
-  setSelectedClub(id: number){
-    this.selectedClubId = Number(id)
-  }
-
-  getSelectedClub(){
-    return this.selectedClubId;
   }
 
   async login({
@@ -95,9 +83,12 @@ export class RestClient {
 
   async getAttendees(clubID: number, clubDayID: number): Promise<AuthUser[]> {
     return this.#wrap(
-      fetch(this.#buildURL('clubs', clubID, 'club-days', clubDayID, 'attendees'), {
-        headers: this.#getHeaders(),
-      })
+      fetch(
+        this.#buildURL('clubs', clubID, 'club-days', clubDayID, 'attendees'),
+        {
+          headers: this.#getHeaders(),
+        }
+      )
     ).then(r => r?.json());
   }
 
@@ -126,40 +117,29 @@ export class RestClient {
     ).then(r => r?.json());
   }
 
-  async getClubDayQRToken(clubID: number, clubDayID: number): Promise<{token: string}> {
+  async getClubDayQRToken(
+    clubID: number,
+    clubDayID: number
+  ): Promise<{token: string}> {
     return this.#wrap(
-      fetch(this.#buildURL('clubs', clubID, 'club-days', clubDayID, 'qr-token'), {
-        headers: this.#getHeaders(),
-      })
+      fetch(
+        this.#buildURL('clubs', clubID, 'club-days', clubDayID, 'qr-token'),
+        {
+          headers: this.#getHeaders(),
+        }
+      )
     ).then(r => r?.json());
   }
 
   async getClubs(): Promise<Club[]> {
-	 return this.#wrap(
+    return this.#wrap(
       fetch(this.#buildURL('clubs'), {
         headers: this.#getHeaders(),
       })
     ).then(res => res?.json());
   }
 
-  async hasClubs(){
-    const clubs = await this.getClubs();
-    if(!clubs || clubs.length == 0){
-      this.hadClubs = false;
-      return false;
-    }
-    if(this.selectedClubId==-1){
-      this.selectedClubId = clubs[0].id;
-    }
-    this.hadClubs=true;
-    return true;
-  }
-
-  getHadClubs(){
-	 return this.hadClubs;
-  }
-
-  async getClubAdmins(clubID: number): Promise<AuthUser[]>{
+  async getClubAdmins(clubID: number): Promise<AuthUser[]> {
     return this.#wrap(
       fetch(this.#buildURL('clubs', clubID, 'admins'), {
         headers: this.#getHeaders(),
@@ -167,7 +147,7 @@ export class RestClient {
     ).then(r => r?.json());
   }
 
-  async searchUsers(searchWords: string): Promise<AuthUser[]>{
+  async searchUsers(searchWords: string): Promise<AuthUser[]> {
     return this.#wrap(
       fetch(this.#BASE_URL + '/user/search', {
         method: 'POST',
@@ -179,10 +159,10 @@ export class RestClient {
           'content-type': 'application/json',
         },
       })
-      ).then(r => r?.json());
+    ).then(r => r?.json());
   }
 
-  async addClubAdmin(clubId: number, userId: number){
+  async addClubAdmin(clubId: number, userId: number) {
     return this.#wrap(
       fetch(this.#buildURL('clubs', clubId, 'admins'), {
         method: 'POST',
@@ -194,10 +174,10 @@ export class RestClient {
           'content-type': 'application/json',
         },
       })
-      ).then(r => r?.json());
+    ).then(r => r?.json());
   }
 
-  async removeClubAdmin(clubId: number, userId: number){
+  async removeClubAdmin(clubId: number, userId: number) {
     return this.#wrap(
       fetch(this.#buildURL('clubs', clubId, 'admins'), {
         method: 'DELETE',
@@ -209,18 +189,18 @@ export class RestClient {
           'content-type': 'application/json',
         },
       })
-      ).then(r => r?.json());
+    ).then(r => r?.json());
   }
 
-  async getAllClubs(){
+  async getAllClubs() {
     return this.#wrap(
-      fetch(this.#BASE_URL + `/clubs`, {
+      fetch(this.#BASE_URL + '/clubs', {
         headers: this.#getHeaders(),
       })
-      ).then(r => r?.json());
+    ).then(r => r?.json());
   }
 
-  async createClub(name: string){
+  async createClub(name: string) {
     return this.#wrap(
       fetch(this.#BASE_URL + '/clubs', {
         method: 'POST',
@@ -232,27 +212,27 @@ export class RestClient {
           'content-type': 'application/json',
         },
       })
-      ).then(r => r?.json());
+    ).then(r => r?.json());
   }
 
-  async deleteClub(clubID: number){
+  async deleteClub(clubID: number) {
     return this.#wrap(
       fetch(this.#buildURL('clubs', clubID), {
         method: 'DELETE',
         headers: this.#getHeaders(),
       })
-      ).then(d => d?.json());
+    ).then(d => d?.json());
   }
 
-  async getAllUsers(): Promise<AuthUser[]>{
+  async getAllUsers(): Promise<AuthUser[]> {
     return this.#wrap(
       fetch(this.#buildURL('users'), {
         headers: this.#getHeaders(),
       })
-      ).then(r => r?.json());
+    ).then(r => r?.json());
   }
 
-  async makeServiceAdmin(id: number){
+  async makeServiceAdmin(id: number) {
     return this.#wrap(
       //fetch(this.#BASE_URL + '/user/addadmin', {
       fetch(this.#buildURL('users', id), {
@@ -265,10 +245,10 @@ export class RestClient {
           'content-type': 'application/json',
         },
       })
-      ).then(r => r?.json());
+    );
   }
 
-  async removeServiceAdmin(id: number){
+  async removeServiceAdmin(id: number) {
     return this.#wrap(
       fetch(this.#buildURL('users', id), {
         method: 'PATCH',
@@ -280,20 +260,8 @@ export class RestClient {
           'content-type': 'application/json',
         },
       })
-      //fetch(this.#BASE_URL + '/user/removeadmin', {
-      //  method: 'POST',
-      //  body: JSON.stringify({
-      //    userId: id,
-      //  }),
-      //  headers: {
-      //    ...this.#getHeaders(),
-      //    'content-type': 'application/json',
-      //  },
-      //})
-      ).then(r => r?.json());
+    );
   }
-
-
 
   /**
    * Maps any error to a RestError, and optionally runs a function if the API returns 401
