@@ -11,7 +11,7 @@ import styles from './ClubDays.module.css';
 import CreateClubDayButton from '../components/CreateClubDay';
 import QRDisplayModalButton from '../components/QRModal';
 
-import {AddClubAdminButton, RemoveClubAdminButton} from '../components/ManageClubAdmins.tsx'
+import {AddClubAdminButton, ManageClubAdminButton, RemoveClubAdminButton} from '../components/ManageClubAdmins.tsx'
 
 type ClubDayTableData = ClubDay & {
   key: number;
@@ -162,8 +162,7 @@ const ClubDaysPage: FC = () => {
 
         <Col span={8}>
           <Flex gap="small" style={{justifyContent: 'flex-end'}}>
-            <AddClubAdminButton club={selectedClub} />
-            <RemoveClubAdminButton club={selectedClub} />
+            <ManageClubAdminButton club={selectedClub} />
           </Flex>
         </Col>
       </Row>

@@ -15,7 +15,7 @@ const UserServiceAdminButton: FC<Props> = ({user, rerender}) => {
         await rest.removeServiceAdmin(user.id).catch(console.error);
         rerender();
         }, [user]);
-    
+
     const makeAdmin = useCallback(async () => {
         await rest.makeServiceAdmin(user.id).catch(console.error);
         rerender();
@@ -34,10 +34,10 @@ const UserServiceAdminButton: FC<Props> = ({user, rerender}) => {
             </Popconfirm>
         )}
         {!user?.isAdmin &&(
-            <Button type="primary" onClick={() =>makeAdmin()}>
-                Make Admin
+            <Button type="primary" onClick={() => makeAdmin()}>
+                Promote to Service Admin
             </Button>
-        )}    
+        )}
         </>
         );
 };

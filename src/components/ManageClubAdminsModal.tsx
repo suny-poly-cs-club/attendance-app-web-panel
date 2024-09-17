@@ -27,8 +27,8 @@ export const ManageClubAdminsModal: FC<Props> = ({club, open, setOpen}) => {
       setLoading(true);
       console.log('getting admins')
       rest.getClubAdmins(club.id)
-      .then(admins => setCurrentAdmins(admins))
-      .finally(() => setLoading(false));
+        .then(admins => setCurrentAdmins(admins))
+        .finally(() => setLoading(false));
     }
   }, [open, club])
 

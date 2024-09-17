@@ -254,10 +254,11 @@ export class RestClient {
 
   async makeServiceAdmin(id: number){
     return this.#wrap(
-      fetch(this.#BASE_URL + '/user/addadmin', {
-        method: 'POST',
+      //fetch(this.#BASE_URL + '/user/addadmin', {
+      fetch(this.#buildURL('users', id), {
+        method: 'PATCH',
         body: JSON.stringify({
-          userId: id,
+          service_admin: true,
         }),
         headers: {
           ...this.#getHeaders(),
@@ -269,16 +270,26 @@ export class RestClient {
 
   async removeServiceAdmin(id: number){
     return this.#wrap(
-      fetch(this.#BASE_URL + '/user/removeadmin', {
-        method: 'POST',
+      fetch(this.#buildURL('users', id), {
+        method: 'PATCH',
         body: JSON.stringify({
-          userId: id,
+          service_admin: false,
         }),
         headers: {
           ...this.#getHeaders(),
           'content-type': 'application/json',
         },
       })
+      //fetch(this.#BASE_URL + '/user/removeadmin', {
+      //  method: 'POST',
+      //  body: JSON.stringify({
+      //    userId: id,
+      //  }),
+      //  headers: {
+      //    ...this.#getHeaders(),
+      //    'content-type': 'application/json',
+      //  },
+      //})
       ).then(r => r?.json());
   }
 
