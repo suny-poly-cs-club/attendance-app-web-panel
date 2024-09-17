@@ -30,7 +30,21 @@ const ViewAttendeesModal: FC<Props> = ({club, clubDay, open, setOpen}) => {
         open={open}
         footer={[
           attendees.length > 0 && (
+            <>
             <Button
+              type="default"
+              onClick={() => {
+                downloadFile('attendance.txt', {
+                  data:
+                    attendees.map(a => `${a.firstName} ${a.lastName}`).join('\n'),
+                  type: 'application/json',
+                });
+              }}
+              key="download_button"
+            >
+              Download Attendees
+            </Button>
+              <Button
               type="default"
               onClick={() => {
                 downloadFile('attendance.json', {
@@ -42,6 +56,7 @@ const ViewAttendeesModal: FC<Props> = ({club, clubDay, open, setOpen}) => {
             >
               Download JSON
             </Button>
+            </>
           ),
 
           <Button
@@ -57,7 +72,7 @@ const ViewAttendeesModal: FC<Props> = ({club, clubDay, open, setOpen}) => {
         <div>
           {attendees.length ? (
             attendees.map((a, i) => (
-              <p key={i}>
+              <p style={{margin: 0}} key={i}>
                 {a.firstName} {a.lastName}
               </p>
             ))

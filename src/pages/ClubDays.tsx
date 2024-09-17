@@ -144,6 +144,8 @@ const ClubDaysPage: FC = () => {
     },
   ];
 
+  // FIXME: on a small screen, the dropdown overlaps the manage admin button
+
   return (
     <>
       <Flex align="center" justify="space-between">
