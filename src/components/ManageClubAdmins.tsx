@@ -1,7 +1,7 @@
 import {Button} from 'antd';
-import {FC, useCallback, useState} from 'react';
+import {type FC, useCallback, useState} from 'react';
 import {ManageClubAdminsModal} from './ManageClubAdminsModal.tsx';
-import {Club} from '../rest.ts';
+import type {Club} from '../rest.ts';
 
 type Props = {
   club: Club;
@@ -16,7 +16,7 @@ export const ManageClubAdminButton: FC<Props> = ({club}) => {
 
   return (
     <>
-      <Button type="primary" onClick={onClick}>
+      <Button type='primary' onClick={onClick}>
         Manage Admins
       </Button>
       <ManageClubAdminsModal club={club} open={open} setOpen={setOpen} />

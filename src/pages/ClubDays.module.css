@@ -11,22 +11,22 @@
   font-size: large;
 }
 
-.clubActionButton{
+.clubActionButton {
   padding-left: 2em;
   padding-right: 2em;
 }
 
-.clubActionButtonContainer{
+.clubActionButtonContainer {
   display: flex;
 }
 
-.clubAdminUserList{
+.clubAdminUserList {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.addClubAdminsSearchBox{
+.addClubAdminsSearchBox {
   padding: 0.8em;
   border-radius: 1em;
   border-color: lightgrey;

@@ -1,8 +1,8 @@
 import {Button} from 'antd';
-import {FC, useState} from 'react';
+import {type FC, useState} from 'react';
 import CreateClubModal from './CreateClubModal';
 import {useRest} from '../providers/auth';
-import {Club} from '../rest';
+import type {Club} from '../rest';
 
 type ClubTableData = Club & {key: number};
 
@@ -34,7 +34,7 @@ const CreateClubButton: FC<Props> = ({setClubs}) => {
 
   return (
     <>
-      <Button type="primary" onClick={() => setOpen(true)}>
+      <Button type='primary' onClick={() => setOpen(true)}>
         Create Club
       </Button>
 

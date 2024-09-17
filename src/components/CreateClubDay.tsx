@@ -1,9 +1,9 @@
 import {Button} from 'antd';
-import {FC, useState} from 'react';
+import {type FC, useState} from 'react';
 import CreateClubDayModal from './CreateClubDayModal';
 import {useRest} from '../providers/auth';
-import {Dayjs} from 'dayjs';
-import {Club} from '../rest';
+import type {Dayjs} from 'dayjs';
+import type {Club} from '../rest';
 
 type Props = {
   rerender: () => void;
@@ -33,7 +33,7 @@ const CreateClubDayButton: FC<Props> = ({club, rerender}) => {
 
   return (
     <>
-      <Button type="primary" onClick={() => setOpen(true)}>
+      <Button type='primary' onClick={() => setOpen(true)}>
         Create Club Day
       </Button>
 

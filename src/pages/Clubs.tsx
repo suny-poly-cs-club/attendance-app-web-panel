@@ -1,5 +1,5 @@
-import {FC, useEffect, useState} from 'react';
-import {Flex, Table, TableColumnsType} from 'antd';
+import {type FC, useEffect, useState} from 'react';
+import {Flex, Table, type TableColumnsType} from 'antd';
 
 import {useRest} from '../providers/auth';
 import styles from './ClubDays.module.css';
@@ -35,7 +35,8 @@ const ClubsPage: FC = () => {
         setData(mappedData);
       })
       .finally(() => setIsLoading(false));
-  }, [update]);
+    update;
+  }, [update, rest]);
 
   const columns: TableColumnsType<ClubTableData> = [
     {
@@ -55,7 +56,7 @@ const ClubsPage: FC = () => {
       title: 'Actions',
       key: 'actions',
       render: (_, club) => (
-        <Flex gap="small">
+        <Flex gap='small'>
           <ManageClubAdminButton club={club} />
           <DeleteClubButton setClubs={setData} club={club} />
         </Flex>

@@ -1,4 +1,4 @@
-import {FC, Suspense, lazy} from 'react';
+import {type FC, Suspense, lazy} from 'react';
 import {Route} from 'wouter';
 
 import {Layout} from 'antd';
@@ -19,13 +19,13 @@ const App: FC = () => {
       <Nav />
 
       <Content style={{padding: '0 50px'}}>
-        <Route path="/">
+        <Route path='/'>
           <Suspense>
             <HomePage />
           </Suspense>
         </Route>
 
-        <Route path="/club-days">
+        <Route path='/club-days'>
           <AuthRoute requireAdmin={true}>
             <Suspense>
               <ClubDaysPage />
@@ -33,7 +33,7 @@ const App: FC = () => {
           </AuthRoute>
         </Route>
 
-        <Route path="/profile">
+        <Route path='/profile'>
           <AuthRoute requireAdmin={true}>
             <Suspense>
               <ProfilePage />
@@ -41,7 +41,7 @@ const App: FC = () => {
           </AuthRoute>
         </Route>
 
-        <Route path="/clubs">
+        <Route path='/clubs'>
           <AuthRoute requireAdmin={true}>
             <Suspense>
               <ClubsPage />
@@ -49,7 +49,7 @@ const App: FC = () => {
           </AuthRoute>
         </Route>
 
-        <Route path="/users">
+        <Route path='/users'>
           <AuthRoute requireAdmin={true}>
             <Suspense>
               <UsersPage />

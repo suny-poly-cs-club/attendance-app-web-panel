@@ -1,6 +1,6 @@
 import {Button, Popconfirm} from 'antd';
-import {FC, useCallback} from 'react';
-import {AuthUser, useAuth, useRest} from '../providers/auth';
+import {type FC, useCallback} from 'react';
+import {type AuthUser, useAuth, useRest} from '../providers/auth';
 
 type Props = {
   user: AuthUser;
@@ -15,19 +15,19 @@ const UserServiceAdminButton: FC<Props> = ({user, rerender}) => {
   const confirmRemove = useCallback(async () => {
     await rest.removeServiceAdmin(user.id).catch(console.error);
     rerender();
-  }, [user]);
+  }, [user, rerender, rest]);
 
   const makeAdmin = useCallback(async () => {
     await rest.makeServiceAdmin(user.id).catch(console.error);
     rerender();
-  }, [user]);
+  }, [user, rerender, rest]);
 
   return (
     <>
-      {user?.isAdmin && (
+      {user?.isAdmin ? (
         <Popconfirm
-          title="Remove Admin Access"
-          description="Are you sure you want to remove admin access from this user?"
+          title='Remove Admin Access'
+          description='Are you sure you want to remove admin access from this user?'
           onConfirm={confirmRemove}
         >
           <Button
@@ -42,9 +42,8 @@ const UserServiceAdminButton: FC<Props> = ({user, rerender}) => {
             Remove Service Admin
           </Button>
         </Popconfirm>
-      )}
-      {!user?.isAdmin && (
-        <Button type="primary" onClick={() => makeAdmin()}>
+      ) : (
+        <Button type='primary' onClick={() => makeAdmin()}>
           Promote to Service Admin
         </Button>
       )}

@@ -1,4 +1,4 @@
-import {FC, ReactNode} from 'react';
+import type {FC, ReactNode} from 'react';
 import {Redirect} from 'wouter';
 
 import {useAuth} from '../providers/auth';
@@ -17,13 +17,13 @@ const AuthRoute: FC<{
 
   if (isLoggedIn && user) {
     if (requireAdmin && !user.isAdmin) {
-      return <Redirect to="/" />;
+      return <Redirect to='/' />;
     }
 
     return children;
   }
 
-  return <Redirect to="/" />;
+  return <Redirect to='/' />;
 };
 
 export default AuthRoute;

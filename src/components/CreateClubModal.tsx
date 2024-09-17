@@ -1,5 +1,5 @@
 import {Input, Form, Modal} from 'antd';
-import {FC} from 'react';
+import type {FC} from 'react';
 
 type Props = {
   open: boolean;
@@ -22,9 +22,9 @@ const CreateClubModal: FC<Props> = ({
 
   return (
     <Modal
-      title="Create a Club"
-      okText="Create"
-      cancelText="Cancel"
+      title='Create a Club'
+      okText='Create'
+      cancelText='Cancel'
       open={open}
       confirmLoading={confirmLoading}
       onCancel={onCancel}
@@ -39,10 +39,10 @@ const CreateClubModal: FC<Props> = ({
           });
       }}
     >
-      <Form form={form} layout="vertical" name="create_club">
+      <Form form={form} layout='vertical' name='create_club'>
         <Form.Item
-          name="name"
-          label="Club Name"
+          name='name'
+          label='Club Name'
           rules={[
             {
               required: true,

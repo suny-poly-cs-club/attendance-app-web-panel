@@ -1,9 +1,9 @@
-import {FC, useEffect, useState} from 'react';
+import {type FC, useEffect, useState} from 'react';
 import {Button, Divider, Input, List, Modal, Popconfirm} from 'antd';
 const {Search} = Input;
 
-import {AuthUser, useAuth, useRest} from '../providers/auth';
-import {Club} from '../rest';
+import {type AuthUser, useAuth, useRest} from '../providers/auth';
+import type {Club} from '../rest';
 
 type Props = {
   open: boolean;
@@ -31,7 +31,7 @@ export const ManageClubAdminsModal: FC<Props> = ({club, open, setOpen}) => {
         .then(admins => setCurrentAdmins(admins))
         .finally(() => setLoading(false));
     }
-  }, [open, club]);
+  }, [open, club, rest]);
 
   const getUsers = async () => {
     setLoading(true);
@@ -83,13 +83,13 @@ export const ManageClubAdminsModal: FC<Props> = ({club, open, setOpen}) => {
 
   return (
     <Modal
-      title="Manage Club Admins"
+      title='Manage Club Admins'
       open={open}
       footer={[
         <Button
-          type="default"
+          type='default'
           onClick={() => setOpen(false)}
-          key="close_button"
+          key='close_button'
         >
           Close
         </Button>,
@@ -97,7 +97,7 @@ export const ManageClubAdminsModal: FC<Props> = ({club, open, setOpen}) => {
       onCancel={() => setOpen(false)}
     >
       <Search
-        placeholder="Search for users..."
+        placeholder='Search for users...'
         onSearch={onSearch}
         loading={searchLoading}
         // value={searchValue}
@@ -115,33 +115,35 @@ export const ManageClubAdminsModal: FC<Props> = ({club, open, setOpen}) => {
             actions={[
               currentAdmins.some(c => c.id === item.id) ? (
                 <Popconfirm
-                  title="Remove Admin"
+                  title='Remove Admin'
                   description={`Are you sure you want to remove ${item.firstName} ${item.lastName} as an admin from this club?`}
                   onConfirm={() => removeAdmin(item)}
+                  key={item.id}
                 >
                   <Button
                     danger
                     disabled={item.isAdmin || item.id === me?.id}
-                    type="primary"
-                    size="small"
+                    type='primary'
+                    size='small'
                     title={
                       item.id === me?.id
                         ? 'Cannot remove admin from yourself'
                         : item.isAdmin
-                        ? 'User is a Service Admin'
-                        : ''
+                          ? 'User is a Service Admin'
+                          : ''
                     }
                   >
-                    Remove Service Admin
+                    Remove Admin
                   </Button>
                 </Popconfirm>
               ) : (
                 <Popconfirm
-                  title="Add Admin"
+                  title='Add Admin'
                   description={`Are you sure you want to make ${item.firstName} ${item.lastName} an admin of this club?`}
                   onConfirm={() => addAdmin(item)}
+                  key={item.id}
                 >
-                  <Button type="primary" size="small">
+                  <Button type='primary' size='small'>
                     Promote to Admin
                   </Button>
                 </Popconfirm>

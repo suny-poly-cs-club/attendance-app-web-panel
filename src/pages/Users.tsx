@@ -1,7 +1,7 @@
-import {FC, useEffect, useState} from 'react';
-import {Space, Table, TableColumnsType} from 'antd';
+import {type FC, useEffect, useState} from 'react';
+import {Space, Table, type TableColumnsType} from 'antd';
 
-import {AuthUser, useRest} from '../providers/auth';
+import {type AuthUser, useRest} from '../providers/auth';
 import styles from './ClubDays.module.css';
 import UserServiceAdminButton from '../components/UserServiceAdminButton.tsx';
 
@@ -29,7 +29,8 @@ const UsersPage: FC = () => {
         setData(mappedData);
       })
       .finally(() => setIsLoading(false));
-  }, [update]);
+    update;
+  }, [update, rest]);
 
   const columns: TableColumnsType<UserTableData> = [
     {

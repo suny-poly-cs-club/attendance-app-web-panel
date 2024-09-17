@@ -1,7 +1,7 @@
 import {Button, Popconfirm} from 'antd';
-import {FC, useCallback} from 'react';
+import {type FC, useCallback} from 'react';
 import {useRest} from '../providers/auth';
-import {Club} from '../rest';
+import type {Club} from '../rest';
 
 type ClubTableData = Club & {key: number};
 
@@ -18,12 +18,12 @@ const DeleteClubButton: FC<Props> = ({club, setClubs}) => {
   const confirmDelete = useCallback(async () => {
     await rest.deleteClub(club.id).catch(console.error);
     setClubs(c => c.filter(cl => cl.id !== club.id));
-  }, [club]);
+  }, [club, rest, setClubs]);
 
   return (
     <Popconfirm
-      title="Delete Club"
-      description="Are you sure you want to delete this club?"
+      title='Delete Club'
+      description='Are you sure you want to delete this club?'
       onConfirm={confirmDelete}
     >
       <Button danger>Delete</Button>

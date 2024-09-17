@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import {type FC, useEffect} from 'react';
 import {Button} from 'antd';
 
 import {useAuth} from '../providers/auth';
@@ -26,7 +26,7 @@ const HomePage: FC = () => {
       closeLogInForm();
       closeSignUpForm();
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, closeLogInForm, closeSignUpForm]);
 
   return (
     <div className={styles.centered}>

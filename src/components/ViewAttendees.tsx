@@ -1,6 +1,6 @@
 import {Button} from 'antd';
-import {FC, useCallback, useState} from 'react';
-import {Club, ClubDay} from '../rest';
+import {type FC, useState} from 'react';
+import type {Club, ClubDay} from '../rest';
 import ViewAttendeesModal from './ViewAttendeesModal';
 
 type Props = {
@@ -11,13 +11,9 @@ type Props = {
 const ViewAttendeesButton: FC<Props> = ({club, clubDay}) => {
   const [open, setOpen] = useState(false);
 
-  const onClick = useCallback(() => {
-    setOpen(true);
-  }, [clubDay]);
-
   return (
     <>
-      <Button type="primary" onClick={onClick}>
+      <Button type='primary' onClick={() => setOpen(true)}>
         View Attendees
       </Button>
       <ViewAttendeesModal

@@ -1,4 +1,4 @@
-import {AuthUser} from './providers/auth';
+import type {AuthUser} from './providers/auth';
 
 export type ClubDay = {
   attendees: number;
@@ -33,7 +33,7 @@ export class RestClient {
     password: string;
   }): Promise<{token: string}> {
     return this.#wrap(
-      fetch(this.#BASE_URL + '/login', {
+      fetch(this.#buildURL('login'), {
         method: 'POST',
         body: JSON.stringify({email, password}),
         headers: {
@@ -53,7 +53,7 @@ export class RestClient {
     [key in 'email' | 'password' | 'firstName' | 'lastName']: string;
   }): Promise<{token: string}> {
     return this.#wrap(
-      fetch(this.#BASE_URL + '/sign-up', {
+      fetch(this.#buildURL('sign-up'), {
         method: 'POST',
         body: JSON.stringify({email, password, firstName, lastName}),
         headers: {
@@ -66,7 +66,7 @@ export class RestClient {
 
   async getUser() {
     return this.#wrap(
-      fetch(this.#BASE_URL + '/user', {
+      fetch(this.#buildURL('user'), {
         headers: this.#getHeaders(),
       })
     ).then(res => res?.json());
@@ -149,7 +149,7 @@ export class RestClient {
 
   async searchUsers(searchWords: string): Promise<AuthUser[]> {
     return this.#wrap(
-      fetch(this.#BASE_URL + '/user/search', {
+      fetch(this.#buildURL('user', 'search'), {
         method: 'POST',
         body: JSON.stringify({
           querey: searchWords,
@@ -194,7 +194,7 @@ export class RestClient {
 
   async getAllClubs() {
     return this.#wrap(
-      fetch(this.#BASE_URL + '/clubs', {
+      fetch(this.#buildURL('clubs'), {
         headers: this.#getHeaders(),
       })
     ).then(r => r?.json());
@@ -202,7 +202,7 @@ export class RestClient {
 
   async createClub(name: string) {
     return this.#wrap(
-      fetch(this.#BASE_URL + '/clubs', {
+      fetch(this.#buildURL('clubs'), {
         method: 'POST',
         body: JSON.stringify({
           name: name,

@@ -1,6 +1,6 @@
-import {FC, useEffect, useState} from 'react';
-import {AuthUser, useRest} from '../providers/auth';
-import {Club, ClubDay} from '../rest';
+import {type FC, useEffect, useState} from 'react';
+import {type AuthUser, useRest} from '../providers/auth';
+import type {Club, ClubDay} from '../rest';
 import {Button, Modal} from 'antd';
 import {downloadFile} from '../util/download';
 
@@ -22,7 +22,7 @@ const ViewAttendeesModal: FC<Props> = ({club, clubDay, open, setOpen}) => {
     }
 
     rest.getAttendees(club.id, clubDay.id).then(a => setAttendees(a));
-  }, [club, clubDay, open]);
+  }, [club, clubDay, open, rest]);
 
   return (
     <>
@@ -32,7 +32,7 @@ const ViewAttendeesModal: FC<Props> = ({club, clubDay, open, setOpen}) => {
           ...(attendees.length > 0
             ? [
                 <Button
-                  type="default"
+                  type='default'
                   onClick={() => {
                     downloadFile('attendance.txt', {
                       data: attendees
@@ -41,19 +41,19 @@ const ViewAttendeesModal: FC<Props> = ({club, clubDay, open, setOpen}) => {
                       type: 'application/json',
                     });
                   }}
-                  key="download_txt"
+                  key='download_txt'
                 >
                   Download Attendees
                 </Button>,
                 <Button
-                  type="default"
+                  type='default'
                   onClick={() => {
                     downloadFile('attendance.json', {
                       data: JSON.stringify(attendees, null, 2),
                       type: 'application/json',
                     });
                   }}
-                  key="download_json"
+                  key='download_json'
                 >
                   Download JSON
                 </Button>,
@@ -61,9 +61,9 @@ const ViewAttendeesModal: FC<Props> = ({club, clubDay, open, setOpen}) => {
             : []),
 
           <Button
-            type="primary"
+            type='primary'
             onClick={() => setOpen(false)}
-            key="close_button"
+            key='close_button'
           >
             Close
           </Button>,
@@ -72,8 +72,8 @@ const ViewAttendeesModal: FC<Props> = ({club, clubDay, open, setOpen}) => {
       >
         <div>
           {attendees.length ? (
-            attendees.map((a, i) => (
-              <p style={{margin: 0}} key={i}>
+            attendees.map(a => (
+              <p style={{margin: 0}} key={a.id}>
                 {a.firstName} {a.lastName}
               </p>
             ))

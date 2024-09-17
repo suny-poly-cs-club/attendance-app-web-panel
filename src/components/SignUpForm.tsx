@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import type {FC} from 'react';
 import {Form, Input, Modal} from 'antd';
 
 import {useAuth} from '../providers/auth';
@@ -19,8 +19,8 @@ export const SignUpForm: FC<SignUpProps> = ({open, onCancel}) => {
 
   return (
     <Modal
-      title="Sign Up"
-      okText="Sign Up"
+      title='Sign Up'
+      okText='Sign Up'
       open={open}
       onCancel={onCancel}
       onOk={() => {
@@ -52,7 +52,7 @@ export const SignUpForm: FC<SignUpProps> = ({open, onCancel}) => {
         });
       }}
     >
-      <Form layout="vertical" form={form} name="signup">
+      <Form layout='vertical' form={form} name='signup'>
         <div
           style={{
             display: 'flex',
@@ -61,8 +61,8 @@ export const SignUpForm: FC<SignUpProps> = ({open, onCancel}) => {
           }}
         >
           <Form.Item
-            name="firstName"
-            label="First Name"
+            name='firstName'
+            label='First Name'
             rules={[{required: true, type: 'string', max: 80}]}
             style={{width: '100%'}}
           >
@@ -70,8 +70,8 @@ export const SignUpForm: FC<SignUpProps> = ({open, onCancel}) => {
           </Form.Item>
 
           <Form.Item
-            name="lastName"
-            label="Last Name"
+            name='lastName'
+            label='Last Name'
             rules={[{required: true, type: 'string', max: 80}]}
             style={{width: '100%'}}
           >
@@ -80,18 +80,18 @@ export const SignUpForm: FC<SignUpProps> = ({open, onCancel}) => {
         </div>
 
         <Form.Item
-          name="email"
-          label="Email"
+          name='email'
+          label='Email'
           rules={[{required: true, type: 'email', max: 254}]}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          name="password"
-          label="Password"
+          name='password'
+          label='Password'
           rules={[{required: true, min: 5}]}
         >
-          <Input type="password" />
+          <Input type='password' />
         </Form.Item>
       </Form>
     </Modal>

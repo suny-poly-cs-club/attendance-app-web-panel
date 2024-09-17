@@ -1,8 +1,16 @@
-import {FC, useEffect, useState} from 'react';
-import {Flex, Space, Table, TableColumnsType, Select, Row, Col} from 'antd';
+import {type FC, useEffect, useState} from 'react';
+import {
+  Flex,
+  Space,
+  Table,
+  type TableColumnsType,
+  Select,
+  Row,
+  Col,
+} from 'antd';
 import dayjs from 'dayjs';
 
-import {ClubDay} from '../rest';
+import type {ClubDay} from '../rest';
 import {useRest} from '../providers/auth';
 import ViewAttendeesButton from '../components/ViewAttendees';
 import DeleteClubDayButton from '../components/DeleteClubDayButton';
@@ -46,14 +54,14 @@ const ClubsDropdown: FC<DropDownProps> = ({onSelect}) => {
       // TODO: is there a better way to do this?
       onSelect(clubs[0]);
     });
-  }, []);
+  }, [rest, onSelect]);
 
   return (
     <Select
       className={styles.clubDropdownContainer}
       showSearch
-      placeholder="Select a Club"
-      optionFilterProp="children"
+      placeholder='Select a Club'
+      optionFilterProp='children'
       onChange={onChange}
       options={clubList.map(c => ({label: c.name, value: c.id}))}
       value={selectedClub}
@@ -92,7 +100,8 @@ const ClubDaysPage: FC = () => {
         setData(mappedData);
       })
       .finally(() => setIsLoading(false));
-  }, [update, selectedClub]);
+    update;
+  }, [update, selectedClub, rest]);
 
   const columns: TableColumnsType<ClubDayTableData> = [
     {
@@ -150,12 +159,12 @@ const ClubDaysPage: FC = () => {
 
   return (
     <>
-      <Flex align="center" justify="space-between">
+      <Flex align='center' justify='space-between'>
         <h1>Manage Club Days</h1>
         <CreateClubDayButton club={selectedClub} rerender={forceReloadData} />
       </Flex>
 
-      <Row align="middle">
+      <Row align='middle'>
         <Col span={8}>
           <h2>Club</h2>
         </Col>
@@ -165,7 +174,7 @@ const ClubDaysPage: FC = () => {
         </Col>
 
         <Col span={8}>
-          <Flex gap="small" style={{justifyContent: 'flex-end'}}>
+          <Flex gap='small' style={{justifyContent: 'flex-end'}}>
             <ManageClubAdminButton club={selectedClub} />
           </Flex>
         </Col>

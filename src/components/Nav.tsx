@@ -1,13 +1,12 @@
-import {FC, useState} from 'react';
+import type {FC} from 'react';
 import {Menu, Layout, Dropdown} from 'antd';
-import {useAuth, useRest} from '../providers/auth';
+import {useAuth} from '../providers/auth';
 import {Link, useLocation} from 'wouter';
 
 const {Header} = Layout;
 
 const Nav: FC = () => {
-  const rest = useRest();
-  const {user, logout, isLoggedIn} = useAuth();
+  const {user, logout} = useAuth();
   const [, setLocation] = useLocation();
 
   // const [hasClubs, setHasClubs] = useState(false);
@@ -28,30 +27,30 @@ const Nav: FC = () => {
         justifyContent: 'space-between',
       }}
     >
-      <Menu style={{width: '100%'}} theme="dark" mode="horizontal">
-        <Menu.Item key="/">
-          <Link href="/">
-            <a>Home</a>
+      <Menu style={{width: '100%'}} theme='dark' mode='horizontal'>
+        <Menu.Item key='/'>
+          <Link href='/'>
+            <a href='/'>Home</a>
           </Link>
         </Menu.Item>
 
         {user?.isAdmin && (
           <>
-            <Menu.Item key="/club-days">
-              <Link href="/club-days">
-                <a>Club Days</a>
+            <Menu.Item key='/club-days'>
+              <Link href='/club-days'>
+                <a href='/club-days'>Club Days</a>
               </Link>
             </Menu.Item>
 
-            <Menu.Item key="/clubs">
-              <Link href="/clubs">
-                <a>Clubs</a>
+            <Menu.Item key='/clubs'>
+              <Link href='/clubs'>
+                <a href='/clubs'>Clubs</a>
               </Link>
             </Menu.Item>
 
-            <Menu.Item key="/users">
-              <Link href="/users">
-                <a>Users</a>
+            <Menu.Item key='/users'>
+              <Link href='/users'>
+                <a href='/users'>Users</a>
               </Link>
             </Menu.Item>
           </>
