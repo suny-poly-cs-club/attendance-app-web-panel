@@ -26,7 +26,7 @@ const Nav: FC = () => {
           </Link>
         </Menu.Item>
 
-        {user?.isClubAdmin && (
+        {(user?.isClubAdmin || user?.isAdmin) && (
           <Menu.Item key='/club-days'>
             <Link href='/club-days'>
               <a href='/club-days'>Club Days</a>
