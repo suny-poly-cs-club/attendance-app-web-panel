@@ -165,15 +165,15 @@ const ClubDaysPage: FC = () => {
       </Flex>
 
       <Row align='middle'>
-        <Col span={8}>
+        <Col span={6}>
           <h2>Club</h2>
         </Col>
 
-        <Col span={8}>
+        <Col span={12}>
           <ClubsDropdown onSelect={setSelectedClub} />
         </Col>
 
-        <Col span={8}>
+        <Col span={6}>
           <Flex gap='small' style={{justifyContent: 'flex-end'}}>
             <ManageClubAdminButton club={selectedClub} />
           </Flex>
