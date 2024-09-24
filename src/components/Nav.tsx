@@ -34,14 +34,14 @@ const Nav: FC = () => {
           </Link>
         </Menu.Item>
 
+        <Menu.Item key='/club-days'>
+          <Link href='/club-days'>
+            <a href='/club-days'>Club Days</a>
+          </Link>
+        </Menu.Item>
+
         {user?.isAdmin && (
           <>
-            <Menu.Item key='/club-days'>
-              <Link href='/club-days'>
-                <a href='/club-days'>Club Days</a>
-              </Link>
-            </Menu.Item>
-
             <Menu.Item key='/clubs'>
               <Link href='/clubs'>
                 <a href='/clubs'>Clubs</a>
