@@ -3,14 +3,20 @@ a simple web app built to interface with the api provided by attendace app back 
 
 before running make shure to adjust the url inside the .env file
 
-##Run In development mode
+## Run In development mode
 ```sh
 pnpm install
 pnpm dev
 ```
 
-##Build for Production
+## Build for Production
 ```sh
 pnpm install
 pnpm Build
 ```
+### TODO:
+- check in page that can be accessed by QR code
+- switch qr code to url to check in page ^
+- page showing all club days you've checked in to
+- live check in feed on QR page?
+  - show people's names in a feed as they check in, with the QR code above it

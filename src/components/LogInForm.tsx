@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import type {FC} from 'react';
 import {Form, Input, Modal} from 'antd';
 
 import {useAuth} from '../providers/auth';
@@ -15,9 +15,9 @@ export const LoginForm: FC<LogInProps> = ({open, onCancel}) => {
 
   return (
     <Modal
-      title="Log In"
-      okText="Log In"
-      cancelText="Cancel"
+      title='Log In'
+      okText='Log In'
+      cancelText='Cancel'
       open={open}
       onCancel={onCancel}
       onOk={() => {
@@ -52,9 +52,9 @@ export const LoginForm: FC<LogInProps> = ({open, onCancel}) => {
       }}
     >
       <Form
-        layout="vertical"
+        layout='vertical'
         form={form}
-        name="login"
+        name='login'
         onKeyDown={event => {
           if (event.key === 'Enter') {
             // TODO: wht does this not submit the form?
@@ -63,15 +63,15 @@ export const LoginForm: FC<LogInProps> = ({open, onCancel}) => {
         }}
       >
         <Form.Item
-          name="email"
-          label="Email"
+          name='email'
+          label='Email'
           rules={[{required: true, type: 'email', max: 254}]}
         >
           <Input />
         </Form.Item>
 
-        <Form.Item name="password" label="Password" rules={[{required: true}]}>
-          <Input type="password" />
+        <Form.Item name='password' label='Password' rules={[{required: true}]}>
+          <Input type='password' />
         </Form.Item>
       </Form>
     </Modal>

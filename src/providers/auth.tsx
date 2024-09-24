@@ -1,5 +1,5 @@
 import {
-  PropsWithChildren,
+  type PropsWithChildren,
   createContext,
   useContext,
   useEffect,
@@ -55,7 +55,7 @@ const AuthContext = createContext<AuthState>({
   rest: null!,
 });
 
-export const AuthProvider = ({children}: PropsWithChildren<{}>) => {
+export const AuthProvider = ({children}: PropsWithChildren) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const [token, setToken] = useState<string | null>(
@@ -85,9 +85,11 @@ export const AuthProvider = ({children}: PropsWithChildren<{}>) => {
       .finally(() => setIsLoading(false));
   }, [token]);
 
-  const signUp = async (signUpArgs: {
-    [key in 'email' | 'password' | 'firstName' | 'lastName']: string;
-  }) => {
+  const signUp = async (
+    signUpArgs: {
+      [key in 'email' | 'password' | 'firstName' | 'lastName']: string;
+    }
+  ) => {
     setIsLoading(true);
     try {
       const token = await restClient.signUp(signUpArgs);

@@ -1,7 +1,8 @@
 export const downloadFile = (
   fileName: string,
-  data: {data: string; type: string} | Blob
+  _data: {data: string; type: string} | Blob
 ) => {
+  let data = _data;
   if (!(data instanceof Blob)) {
     data = new Blob([data.data], {type: data.type});
   }

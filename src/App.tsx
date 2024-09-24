@@ -1,4 +1,4 @@
-import {FC, Suspense, lazy} from 'react';
+import {type FC, Suspense, lazy} from 'react';
 import {Route} from 'wouter';
 
 import {Layout} from 'antd';
@@ -10,8 +10,8 @@ import AuthRoute from './components/AuthRoute';
 const ProfilePage = lazy(() => import('./pages/Profile'));
 const HomePage = lazy(() => import('./pages/Home'));
 const ClubDaysPage = lazy(() => import('./pages/ClubDays'));
-const ClubsPage = lazy(()=> import('./pages/Clubs.tsx'))
-const UsersPage = lazy(() => import('./pages/Users.tsx'))
+const ClubsPage = lazy(() => import('./pages/Clubs.tsx'));
+const UsersPage = lazy(() => import('./pages/Users.tsx'));
 
 const App: FC = () => {
   return (
@@ -19,37 +19,37 @@ const App: FC = () => {
       <Nav />
 
       <Content style={{padding: '0 50px'}}>
-        <Route path="/">
+        <Route path='/'>
           <Suspense>
             <HomePage />
           </Suspense>
         </Route>
 
-        <Route path="/club-days">
-          <AuthRoute requireClubs={true}>
+        <Route path='/club-days'>
+          <AuthRoute requireAdmin={true}>
             <Suspense>
               <ClubDaysPage />
             </Suspense>
           </AuthRoute>
         </Route>
 
-        <Route path="/profile">
+        <Route path='/profile'>
           <AuthRoute requireAdmin={true}>
             <Suspense>
               <ProfilePage />
             </Suspense>
           </AuthRoute>
         </Route>
-        
-        <Route path="/clubs">
+
+        <Route path='/clubs'>
           <AuthRoute requireAdmin={true}>
             <Suspense>
               <ClubsPage />
             </Suspense>
           </AuthRoute>
         </Route>
-        
-        <Route path="/users">
+
+        <Route path='/users'>
           <AuthRoute requireAdmin={true}>
             <Suspense>
               <UsersPage />

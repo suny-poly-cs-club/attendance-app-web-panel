@@ -1,16 +1,17 @@
-import {FC, useEffect, useState} from 'react';
-import {AuthUser, useRest} from '../providers/auth';
-import {ClubDay} from '../rest';
+import {type FC, useEffect, useState} from 'react';
+import {type AuthUser, useRest} from '../providers/auth';
+import type {Club, ClubDay} from '../rest';
 import {Button, Modal} from 'antd';
 import {downloadFile} from '../util/download';
 
 type Props = {
+  club: Club;
   clubDay: ClubDay;
   open: boolean;
   setOpen: (open: boolean) => void;
 };
 
-const ViewAttendeesModal: FC<Props> = ({clubDay, open, setOpen}) => {
+const ViewAttendeesModal: FC<Props> = ({club, clubDay, open, setOpen}) => {
   const rest = useRest();
 
   const [attendees, setAttendees] = useState<AuthUser[]>([]);
@@ -20,33 +21,49 @@ const ViewAttendeesModal: FC<Props> = ({clubDay, open, setOpen}) => {
       return;
     }
 
-    rest.getAttendees(clubDay.id).then(a => setAttendees(a));
-  }, [clubDay, open]);
+    rest.getAttendees(club.id, clubDay.id).then(a => setAttendees(a));
+  }, [club, clubDay, open, rest]);
 
   return (
     <>
       <Modal
         open={open}
-        footer={[
-          attendees.length > 0 && (
-            <Button
-              type="default"
-              onClick={() => {
-                downloadFile('attendance.json', {
-                  data: JSON.stringify(attendees, null, 2),
-                  type: 'application/json',
-                });
-              }}
-              key="download_button"
-            >
-              Download JSON
-            </Button>
-          ),
+        footer={() => [
+          ...(attendees.length > 0
+            ? [
+                <Button
+                  type='default'
+                  onClick={() => {
+                    downloadFile('attendance.txt', {
+                      data: attendees
+                        .map(a => `${a.firstName} ${a.lastName}`)
+                        .join('\n'),
+                      type: 'application/json',
+                    });
+                  }}
+                  key='download_txt'
+                >
+                  Download Attendees
+                </Button>,
+                <Button
+                  type='default'
+                  onClick={() => {
+                    downloadFile('attendance.json', {
+                      data: JSON.stringify(attendees, null, 2),
+                      type: 'application/json',
+                    });
+                  }}
+                  key='download_json'
+                >
+                  Download JSON
+                </Button>,
+              ]
+            : []),
 
           <Button
-            type="primary"
+            type='primary'
             onClick={() => setOpen(false)}
-            key="close_button"
+            key='close_button'
           >
             Close
           </Button>,
@@ -55,8 +72,8 @@ const ViewAttendeesModal: FC<Props> = ({clubDay, open, setOpen}) => {
       >
         <div>
           {attendees.length ? (
-            attendees.map((a, i) => (
-              <p key={i}>
+            attendees.map(a => (
+              <p style={{margin: 0}} key={a.id}>
                 {a.firstName} {a.lastName}
               </p>
             ))

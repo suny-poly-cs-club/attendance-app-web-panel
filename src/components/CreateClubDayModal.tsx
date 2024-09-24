@@ -1,6 +1,6 @@
 import {DatePicker, Form, Modal} from 'antd';
-import {Dayjs} from 'dayjs';
-import {FC} from 'react';
+import type {Dayjs} from 'dayjs';
+import type {FC} from 'react';
 
 type Props = {
   open: boolean;
@@ -23,9 +23,9 @@ const CreateClubDayModal: FC<Props> = ({
 
   return (
     <Modal
-      title="Create a Club Day"
-      okText="Create"
-      cancelText="Cancel"
+      title='Create a Club Day'
+      okText='Create'
+      cancelText='Cancel'
       open={open}
       confirmLoading={confirmLoading}
       onCancel={onCancel}
@@ -40,10 +40,10 @@ const CreateClubDayModal: FC<Props> = ({
           });
       }}
     >
-      <Form form={form} layout="vertical" name="create_club_day">
+      <Form form={form} layout='vertical' name='create_club_day'>
         <Form.Item
-          name="range"
-          label="Start and End Times"
+          name='range'
+          label='Start and End Times'
           rules={[
             {
               required: true,
@@ -60,7 +60,7 @@ const CreateClubDayModal: FC<Props> = ({
           ]}
         >
           <DatePicker.RangePicker
-            format="M/D/YYYY, h:mm A"
+            format='M/D/YYYY, h:mm A'
             showTime={{use12Hours: true, format: 'h:mm A', minuteStep: 5}}
             use12Hours={true}
           />
