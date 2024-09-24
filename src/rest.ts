@@ -179,14 +179,10 @@ export class RestClient {
 
   async removeClubAdmin(clubId: number, userId: number) {
     return this.#wrap(
-      fetch(this.#buildURL('clubs', clubId, 'admins'), {
+      fetch(this.#buildURL('clubs', clubId, 'admins', userId), {
         method: 'DELETE',
-        body: JSON.stringify({
-          userId,
-        }),
         headers: {
           ...this.#getHeaders(),
-          'content-type': 'application/json',
         },
       })
     ).then(r => r?.json());

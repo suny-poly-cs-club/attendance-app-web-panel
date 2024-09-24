@@ -9,14 +9,6 @@ const Nav: FC = () => {
   const {user, logout} = useAuth();
   const [, setLocation] = useLocation();
 
-  // const [hasClubs, setHasClubs] = useState(false);
-  // //if rest has not yet been defined
-  // if (rest && user) {
-  //   rest.hasClubs().then(clubs => {
-  //     setHasClubs(clubs);
-  //   });
-  // }
-
   // TODO: how do I use this with wouter?
 
   return (
@@ -34,11 +26,13 @@ const Nav: FC = () => {
           </Link>
         </Menu.Item>
 
-        <Menu.Item key='/club-days'>
-          <Link href='/club-days'>
-            <a href='/club-days'>Club Days</a>
-          </Link>
-        </Menu.Item>
+        {user?.isClubAdmin && (
+          <Menu.Item key='/club-days'>
+            <Link href='/club-days'>
+              <a href='/club-days'>Club Days</a>
+            </Link>
+          </Menu.Item>
+        )}
 
         {user?.isAdmin && (
           <>

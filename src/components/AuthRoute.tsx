@@ -7,8 +7,8 @@ import LoadingPage from '../pages/Loading';
 const AuthRoute: FC<{
   children: ReactNode;
   requireAdmin?: boolean;
-  requireClubs?: boolean;
-}> = ({children, requireAdmin = false}) => {
+  requireClubAdmin?: boolean;
+}> = ({children, requireAdmin: requireServiceAdmin = false, requireClubAdmin = false}) => {
   const {isLoggedIn, isLoading, user} = useAuth();
 
   if (isLoading) {
@@ -16,7 +16,10 @@ const AuthRoute: FC<{
   }
 
   if (isLoggedIn && user) {
-    if (requireAdmin && !user.isAdmin) {
+    if (
+      (requireServiceAdmin && !user.isAdmin)
+      || (requireClubAdmin && !(user.isClubAdmin || user.isAdmin))
+    ) {
       return <Redirect to='/' />;
     }
 

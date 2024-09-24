@@ -16,6 +16,7 @@ export type AuthUser = {
   lastName: string;
   email: string;
   isAdmin: boolean;
+  isClubAdmin: boolean;
 };
 
 type SignUpArgs = {
