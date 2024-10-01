@@ -26,6 +26,12 @@ const Nav: FC = () => {
           </Link>
         </Menu.Item>
 
+        <Menu.Item key='/check-in'>
+          <Link href='/check-in'>
+            <a href='/check-in'>Check In</a>
+          </Link>
+        </Menu.Item>
+
         {(user?.isClubAdmin || user?.isAdmin) && (
           <Menu.Item key='/club-days'>
             <Link href='/club-days'>

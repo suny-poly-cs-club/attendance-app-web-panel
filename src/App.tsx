@@ -6,6 +6,7 @@ const {Content, Footer} = Layout;
 
 import Nav from './components/Nav';
 import AuthRoute from './components/AuthRoute';
+import CheckInPage from './pages/CheckIn.tsx';
 
 const ProfilePage = lazy(() => import('./pages/Profile'));
 const HomePage = lazy(() => import('./pages/Home'));
@@ -53,6 +54,14 @@ const App: FC = () => {
           <AuthRoute requireAdmin={true}>
             <Suspense>
               <UsersPage />
+            </Suspense>
+          </AuthRoute>
+        </Route>
+
+        <Route path="/check-in">
+          <AuthRoute>
+            <Suspense>
+              <CheckInPage />
             </Suspense>
           </AuthRoute>
         </Route>
