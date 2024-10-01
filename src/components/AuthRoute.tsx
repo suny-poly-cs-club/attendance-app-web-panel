@@ -4,6 +4,8 @@ import {Redirect} from 'wouter';
 import {useAuth} from '../providers/auth';
 import LoadingPage from '../pages/Loading';
 
+// TODO: show login modal if logged out?
+
 const AuthRoute: FC<{
   children: ReactNode;
   requireAdmin?: boolean;
