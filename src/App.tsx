@@ -58,7 +58,7 @@ const App: FC = () => {
           </AuthRoute>
         </Route>
 
-        <Route path="/check-in">
+        <Route path='/check-in'>
           <AuthRoute>
             <Suspense>
               <CheckInPage />

@@ -10,7 +10,11 @@ const AuthRoute: FC<{
   children: ReactNode;
   requireAdmin?: boolean;
   requireClubAdmin?: boolean;
-}> = ({children, requireAdmin: requireServiceAdmin = false, requireClubAdmin = false}) => {
+}> = ({
+  children,
+  requireAdmin: requireServiceAdmin = false,
+  requireClubAdmin = false,
+}) => {
   const {isLoggedIn, isLoading, user} = useAuth();
 
   if (isLoading) {
@@ -19,8 +23,8 @@ const AuthRoute: FC<{
 
   if (isLoggedIn && user) {
     if (
-      (requireServiceAdmin && !user.isAdmin)
-      || (requireClubAdmin && !(user.isClubAdmin || user.isAdmin))
+      (requireServiceAdmin && !user.isAdmin) ||
+      (requireClubAdmin && !(user.isClubAdmin || user.isAdmin))
     ) {
       return <Redirect to='/' />;
     }

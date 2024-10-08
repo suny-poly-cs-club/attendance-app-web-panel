@@ -290,7 +290,7 @@ export class RestClient {
    * Safely build a URL from parts
    */
   #buildURL(...parts: (string | number)[]) {
-	parts.unshift("api");
+    parts.unshift('api');
     return new URL(parts.join('/'), this.#BASE_URL);
   }
 }

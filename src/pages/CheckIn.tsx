@@ -1,4 +1,6 @@
 import type {FC} from 'react';
+import {Space, Input, Button} from 'antd';
+
 import {useQueryParam} from '../hooks/query';
 
 const CheckInPage: FC = () => {
@@ -6,10 +8,17 @@ const CheckInPage: FC = () => {
 
   return (
     <>
-      {code
-        ? <p>code: {code}</p>
-        : <input type="text" placeholder="type code here"/>
-      }
+      {code ? (
+        <p>code: {code}</p>
+      ) : (
+          <>
+            <h1>Check In</h1>
+            <Space.Compact>
+              <Input placeholder='put code here' />
+              <Button type='primary'>Submit</Button>
+            </Space.Compact>
+          </>
+      )}
     </>
   );
 };

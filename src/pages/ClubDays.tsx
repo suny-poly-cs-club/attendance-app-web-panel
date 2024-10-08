@@ -59,7 +59,6 @@ const ClubsDropdown: FC<DropDownProps> = ({onSelect}) => {
   return (
     <Select
       className={styles.clubDropdownContainer}
-      showSearch
       placeholder='Select a Club'
       optionFilterProp='children'
       onChange={onChange}
