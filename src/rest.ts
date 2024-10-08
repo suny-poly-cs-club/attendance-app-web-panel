@@ -276,6 +276,21 @@ export class RestClient {
         })
 	).then(r => r?.json());
   }
+  
+  async checkIn(code: string){
+	return this.#wrap(
+		fetch(this.#buildURL('check-in'),{
+			method: 'POST',
+			body: JSON.stringify({
+				code: code,
+			}),
+			headers: {
+			...this.#getHeaders(),
+			'content-type': 'application/json',
+			},
+		})
+	)
+  }
 
   /**
    * Maps any error to a RestError, and optionally runs a function if the API returns 401
@@ -292,9 +307,18 @@ export class RestClient {
         if (shouldContinue === false) {
           return;
         }
-      }
-
-      throw new RestError(clonedRes.statusText, clonedRes.status, clonedRes);
+	  }
+		//if the error responce is json then extract the json to put into the exeception
+		const contentType = clonedRes.headers.get("Content-Type");
+	  if(contentType && contentType.includes("application/json")){
+		await clonedRes.json().then(json =>{
+			//console.log("JSON");
+			throw new RestError(clonedRes.statusText, clonedRes.status, json);
+		});
+	  
+	  }else{
+		throw new RestError(clonedRes.statusText, clonedRes.status, clonedRes);
+	  }
     }
 
     return res;
