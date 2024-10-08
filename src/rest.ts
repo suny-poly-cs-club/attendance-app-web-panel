@@ -258,6 +258,24 @@ export class RestClient {
       })
     );
   }
+  
+  async getClubNameFromCode(code: string){
+	return this.#wrap(
+		fetch(this.#buildURL('check-code',code))
+		
+	).then(r => r?.json());
+  }
+  
+  async getUserCheckedIn(code: string){
+    return this.#wrap(
+		fetch(this.#buildURL('check-code',code),{
+		  method: 'POST',
+          headers: {
+            ...this.#getHeaders(),
+          },
+        })
+	).then(r => r?.json());
+  }
 
   /**
    * Maps any error to a RestError, and optionally runs a function if the API returns 401
