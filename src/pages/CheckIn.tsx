@@ -11,17 +11,18 @@ const CheckInPage: FC = () => {
   const [clubName, setClubName] = useState<string>("");
   const [checkedIn, setCheckedIn] = useState<boolean>(false);
   
-  useEffect(() => {
-	rest.getClubNameFromCode(code).then(result =>{
-		setClubName(result.name);
-	}),[code]
-  });
-  useEffect(() => {
-	rest.getUserCheckedIn(code).then(result =>{
-		setCheckedIn(result.checkedIn);
-	}),[code]
-  });
-
+  if(code){
+    useEffect(() => {
+	  rest.getClubNameFromCode(code).then(result =>{
+	  	setClubName(result.name);
+	  }),[code]
+    });
+    useEffect(() => {
+	  rest.getUserCheckedIn(code).then(result =>{
+	  	setCheckedIn(result.checkedIn);
+	  }),[code]
+    });
+  }
   return (
     <>
       {code ? (
