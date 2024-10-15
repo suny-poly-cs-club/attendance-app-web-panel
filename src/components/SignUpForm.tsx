@@ -31,9 +31,8 @@ export const SignUpForm: FC<SignUpProps> = ({open, onCancel}) => {
             })
             .catch(err => {
               if (err instanceof RestError) {
-                err.res.json().then(err => {
-                  if (err?.type === 'validation_error') {
-                    form.setFields(err.issues);
+                  if (err.res.type === 'validation_error') {
+                    form.setFields(err.res.issues);
                   } else {
                     form.setFields([
                       {
@@ -46,7 +45,7 @@ export const SignUpForm: FC<SignUpProps> = ({open, onCancel}) => {
                       },
                     ]);
                   }
-                });
+                
               }
             });
         });

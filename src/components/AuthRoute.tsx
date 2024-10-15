@@ -1,8 +1,9 @@
-import type {FC, ReactNode} from 'react';
+import {type FC, type ReactNode, lazy} from 'react';
 import {Redirect} from 'wouter';
 
 import {useAuth} from '../providers/auth';
 import LoadingPage from '../pages/Loading';
+const HomePage = lazy(() => import('../pages/Home'));
 
 // TODO: show login modal if logged out?
 
@@ -30,6 +31,11 @@ const AuthRoute: FC<{
     }
 
     return children;
+  }
+
+  if(window.location.pathname.includes("/check-in")){
+    //if on the check in page and not logged in, show to login prompt instead of redireting. this way after login it automaticly goes back to the checking indead of deleting the stored code
+    return <HomePage />;
   }
 
   return <Redirect to='/' />;

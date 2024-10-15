@@ -12,6 +12,17 @@ export type Club = {
   name: string;
 };
 
+export type ErrorResponce ={
+  type: string;
+  message: string;
+  issues: [//not this is just to make type script happy in login form. note: this may not be the struture of a diffrent validarion error
+    {
+      name: "email"|"password";
+      errors: [string];
+    }
+  ];
+}
+
 export class RestClient {
   #token: string | null;
   #BASE_URL: string = import.meta.env.VITE_API_BASE_URL;
@@ -341,7 +352,7 @@ export class RestError extends Error {
   constructor(
     readonly message: string,
     readonly code: number,
-    readonly res: Response
+    readonly res: Response | ErrorResponce
   ) {
     super(message);
   }

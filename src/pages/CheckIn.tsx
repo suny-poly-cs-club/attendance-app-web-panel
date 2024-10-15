@@ -30,13 +30,15 @@ const CheckInPage: FC = () => {
   }
   
   function checkIn(){
-	rest.checkIn(code).then(() => {
-		console.log("success");
-		setCheckedIn(true);//prbly should show a diffrent message
-	}).catch( (e) =>{
-		alert(e.res.message);
-		//console.log(e+" "+e.res.message)
-	})
+	if(code != null){
+		rest.checkIn(code).then(() => {
+			console.log("success");
+			setCheckedIn(true);//prbly should show a diffrent message
+		}).catch( (e) =>{
+			alert(e.res.message);
+			//console.log(e+" "+e.res.message)
+		})
+	}
   }
   
   return (

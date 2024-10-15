@@ -106,7 +106,7 @@ const QRDisplayModal: FC<ModalProps> = ({club, clubDay, open, onCancel}) => {
       {qrData && (
 		<>
 			<img alt='QR code' ref={ref} src={qrData} className={styles.qrCode} />
-			<p align='center'>
+			<p style={{ alignContent: 'center' }}>
 			{linkCode}
 			</p>
 		</>
