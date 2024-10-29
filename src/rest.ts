@@ -12,17 +12,6 @@ export type Club = {
   name: string;
 };
 
-export type ErrorResponce ={
-  type: string;
-  message: string;
-  issues: [//not this is just to make type script happy in login form. note: this may not be the struture of a diffrent validarion error
-    {
-      name: "email"|"password";
-      errors: [string];
-    }
-  ];
-}
-
 export class RestClient {
   #token: string | null;
   #BASE_URL: string = import.meta.env.VITE_API_BASE_URL;
@@ -269,14 +258,14 @@ export class RestClient {
       })
     );
   }
-  
+
   async getClubNameFromCode(code: string){
 	return this.#wrap(
 		fetch(this.#buildURL('check-code',code))
-		
+
 	).then(r => r?.json());
   }
-  
+
   async getUserCheckedIn(code: string){
     return this.#wrap(
 		fetch(this.#buildURL('check-code',code),{
@@ -287,7 +276,7 @@ export class RestClient {
         })
 	).then(r => r?.json());
   }
-  
+
   async checkIn(code: string){
 	return this.#wrap(
 		fetch(this.#buildURL('check-in'),{
@@ -319,17 +308,8 @@ export class RestClient {
           return;
         }
 	  }
-		//if the error responce is json then extract the json to put into the exeception
-		const contentType = clonedRes.headers.get("Content-Type");
-	  if(contentType && contentType.includes("application/json")){
-		await clonedRes.json().then(json =>{
-			//console.log("JSON");
-			throw new RestError(clonedRes.statusText, clonedRes.status, json);
-		});
-	  
-	  }else{
-		throw new RestError(clonedRes.statusText, clonedRes.status, clonedRes);
-	  }
+
+      throw new RestError(clonedRes.statusText, clonedRes.status, clonedRes);
     }
 
     return res;
@@ -343,8 +323,9 @@ export class RestClient {
    * Safely build a URL from parts
    */
   #buildURL(...parts: (string | number)[]) {
-    parts.unshift('api');
-    return new URL(parts.join('/'), this.#BASE_URL);
+    return this.#BASE_URL.startsWith('/')
+      ? new URL([this.#BASE_URL, ...parts].join('/'), window.location.origin)
+      : new URL(parts.join('/'), this.#BASE_URL);
   }
 }
 
@@ -352,7 +333,7 @@ export class RestError extends Error {
   constructor(
     readonly message: string,
     readonly code: number,
-    readonly res: Response | ErrorResponce
+    readonly res: Response
   ) {
     super(message);
   }

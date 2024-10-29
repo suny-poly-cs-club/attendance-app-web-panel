@@ -30,10 +30,9 @@ export const LoginForm: FC<LogInProps> = ({open, onCancel}) => {
             })
             .catch(err => {
               if (err instanceof RestError) {
-                
-                  if (err.res.type === 'validation_error') {
-                    console.log(err.res.issues);
-                    form.setFields(err.res.issues);
+                err.res.json().then(e => {
+                  if (e.type === 'validation_error') {
+                    form.setFields(e.issues);
                   } else {
                     form.setFields([
                       {
@@ -46,6 +45,7 @@ export const LoginForm: FC<LogInProps> = ({open, onCancel}) => {
                       },
                     ]);
                   }
+                })
               }
             });
         });
