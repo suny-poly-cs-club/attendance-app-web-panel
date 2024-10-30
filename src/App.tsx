@@ -6,13 +6,13 @@ const {Content, Footer} = Layout;
 
 import Nav from './components/Nav';
 import AuthRoute from './components/AuthRoute';
-import CheckInPage from './pages/CheckIn.tsx';
 
 const ProfilePage = lazy(() => import('./pages/Profile'));
 const HomePage = lazy(() => import('./pages/Home'));
 const ClubDaysPage = lazy(() => import('./pages/ClubDays'));
 const ClubsPage = lazy(() => import('./pages/Clubs.tsx'));
 const UsersPage = lazy(() => import('./pages/Users.tsx'));
+const CheckInPage = lazy(() => import('./pages/CheckIn.tsx'));
 
 const App: FC = () => {
   return (

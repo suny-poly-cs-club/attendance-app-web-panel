@@ -5,7 +5,7 @@
 !/pnpm-lock.yaml
 !/tsconfig.json
 !/tsconfig.node.json
-!/vite.conf.ts
+!/vite.config.ts
 !/public
 !/index.html
 !/nginx.conf

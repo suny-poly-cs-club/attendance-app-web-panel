@@ -80,7 +80,7 @@ const ClubDaysPage: FC = () => {
   const forceReloadData = () => _setUpdate(s => !s);
 
   useEffect(() => {
-    console.log(selectedClub);
+    console.log({selectedClub});
     if (!selectedClub) {
       return;
     }
@@ -160,7 +160,9 @@ const ClubDaysPage: FC = () => {
     <>
       <Flex align='center' justify='space-between'>
         <h1>Manage Club Days</h1>
-        <CreateClubDayButton club={selectedClub} rerender={forceReloadData} />
+        {selectedClub && (
+          <CreateClubDayButton club={selectedClub} rerender={forceReloadData} />
+        )}
       </Flex>
 
       <Row align='middle'>
@@ -174,7 +176,7 @@ const ClubDaysPage: FC = () => {
 
         <Col span={6}>
           <Flex gap='small' style={{justifyContent: 'flex-end'}}>
-            <ManageClubAdminButton club={selectedClub} />
+            {selectedClub && <ManageClubAdminButton club={selectedClub} />}
           </Flex>
         </Col>
       </Row>

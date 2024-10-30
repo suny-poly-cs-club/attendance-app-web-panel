@@ -12,27 +12,27 @@ const CheckInPage: FC = () => {
   const [checkedIn, setCheckedIn] = useState<boolean>(false);
   const [codeNotFound, setCodeNotFound] = useState<boolean>(false);
 
-  if (code) {
-    useEffect(() => {
-      rest
-        .getClubNameFromCode(code)
-        .then(result => {
-          setClubName(result.name);
-        })
-        .catch(e => {
-          if (e.code == 404) {
-            setCodeNotFound(true);
-          }
-        }),
-        [code];
-    });
-    useEffect(() => {
-      rest.getUserCheckedIn(code).then(result => {
-        setCheckedIn(result.checkedIn);
+  useEffect(() => {
+    if (!code) {
+      return;
+    }
+
+    rest
+      .getClubNameFromCode(code)
+      .then(result => {
+        setClubName(result.name);
+      })
+      .catch(e => {
+        if (e.code === 404) {
+          setCodeNotFound(true);
+        }
       }),
-        [code];
+      [code, rest];
+
+    rest.getUserCheckedIn(code).then(result => {
+      setCheckedIn(result.checkedIn);
     });
-  }
+  }, [code]);
 
   function checkIn() {
     if (code != null) {
