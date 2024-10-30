@@ -45,7 +45,7 @@ export const LoginForm: FC<LogInProps> = ({open, onCancel}) => {
                       },
                     ]);
                   }
-                })
+                });
               }
             });
         });

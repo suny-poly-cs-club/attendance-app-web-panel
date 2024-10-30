@@ -33,7 +33,7 @@ const AuthRoute: FC<{
     return children;
   }
 
-  if(window.location.pathname.includes("/check-in")){
+  if (window.location.pathname.includes('/check-in')) {
     //if on the check in page and not logged in, show to login prompt instead of redireting. this way after login it automaticly goes back to the checking indead of deleting the stored code
     return <HomePage />;
   }

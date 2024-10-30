@@ -259,37 +259,36 @@ export class RestClient {
     );
   }
 
-  async getClubNameFromCode(code: string){
-	return this.#wrap(
-		fetch(this.#buildURL('check-code',code))
-
-	).then(r => r?.json());
+  async getClubNameFromCode(code: string) {
+    return this.#wrap(fetch(this.#buildURL('check-code', code))).then(r =>
+      r?.json()
+    );
   }
 
-  async getUserCheckedIn(code: string){
+  async getUserCheckedIn(code: string) {
     return this.#wrap(
-		fetch(this.#buildURL('check-code',code),{
-		  method: 'POST',
-          headers: {
-            ...this.#getHeaders(),
-          },
-        })
-	).then(r => r?.json());
+      fetch(this.#buildURL('check-code', code), {
+        method: 'POST',
+        headers: {
+          ...this.#getHeaders(),
+        },
+      })
+    ).then(r => r?.json());
   }
 
-  async checkIn(code: string){
-	return this.#wrap(
-		fetch(this.#buildURL('check-in'),{
-			method: 'POST',
-			body: JSON.stringify({
-				code: code,
-			}),
-			headers: {
-			...this.#getHeaders(),
-			'content-type': 'application/json',
-			},
-		})
-	)
+  async checkIn(code: string) {
+    return this.#wrap(
+      fetch(this.#buildURL('check-in'), {
+        method: 'POST',
+        body: JSON.stringify({
+          code: code,
+        }),
+        headers: {
+          ...this.#getHeaders(),
+          'content-type': 'application/json',
+        },
+      })
+    );
   }
 
   /**
@@ -307,7 +306,7 @@ export class RestClient {
         if (shouldContinue === false) {
           return;
         }
-	  }
+      }
 
       throw new RestError(clonedRes.statusText, clonedRes.status, clonedRes);
     }

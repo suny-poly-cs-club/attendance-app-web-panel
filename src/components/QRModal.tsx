@@ -50,7 +50,7 @@ const QRDisplayModal: FC<ModalProps> = ({club, clubDay, open, onCancel}) => {
   const rest = useRest();
   const ref = useRef<HTMLImageElement>(null);
   const [qrData, setQrData] = useState<string | null>(null);
-  const [linkCode, setLinkCode] = useState<string>("");
+  const [linkCode, setLinkCode] = useState<string>('');
 
   useEffect(() => {
     if (!open) {
@@ -58,11 +58,10 @@ const QRDisplayModal: FC<ModalProps> = ({club, clubDay, open, onCancel}) => {
     }
 
     rest.getClubDayQRToken(club.id, clubDay.id).then(token => {
-	  setLinkCode(token.token)
+      setLinkCode(token.token);
       qr.toString(token.token, {type: 'svg'}).then(qrSvg => {
         const dataURL = `data:image/svg+xml;utf8,${encodeURIComponent(qrSvg)}`;
         setQrData(dataURL);
-		
       });
     });
   }, [clubDay, open, rest, club]);
@@ -104,15 +103,11 @@ const QRDisplayModal: FC<ModalProps> = ({club, clubDay, open, onCancel}) => {
       ]}
     >
       {qrData && (
-		<>
-			<img alt='QR code' ref={ref} src={qrData} className={styles.qrCode} />
-			<p style={{ alignContent: 'center' }}>
-			{linkCode}
-			</p>
-		</>
+        <>
+          <img alt='QR code' ref={ref} src={qrData} className={styles.qrCode} />
+          <p style={{alignContent: 'center'}}>{linkCode}</p>
+        </>
       )}
-	  
-	  
     </Modal>
   );
 };
