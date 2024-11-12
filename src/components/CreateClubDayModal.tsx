@@ -1,4 +1,6 @@
-import {DatePicker, Form, Modal} from 'antd';
+import DatePicker from 'antd/es/date-picker';
+import Form from 'antd/es/form';
+import Modal from 'antd/es/modal/Modal';
 import type {Dayjs} from 'dayjs';
 import type {FC} from 'react';
 

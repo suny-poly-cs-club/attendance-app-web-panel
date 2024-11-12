@@ -1,8 +1,8 @@
-import {Button} from 'antd';
+import Button from 'antd/es/button';
 import {type FC, useState} from 'react';
-import CreateClubModal from './CreateClubModal';
 import {useRest} from '../providers/auth';
 import type {Club} from '../rest';
+import CreateClubModal from './CreateClubModal';
 
 type ClubTableData = Club & {key: number};
 

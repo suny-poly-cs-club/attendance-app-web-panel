@@ -1,12 +1,12 @@
+import {isValidLuhn} from '@benricheson101/util';
+import Flex from 'antd/es/flex';
+import Input from 'antd/es/input';
+import Text from 'antd/es/typography/Text';
 import {type FC, useCallback, useEffect, useState} from 'react';
-import {Flex, Input, Typography} from 'antd';
-import homeStyles from './Home.module.css';
+import CheckedInMessage from '../components/CheckedInMessage';
 import {useQueryParam} from '../hooks/query';
 import {useRest} from '../providers/auth';
-import CheckedInMessage from '../components/CheckedInMessage';
-import {isValidLuhn} from '@benricheson101/util';
-
-const {Text} = Typography;
+import homeStyles from './Home.module.css';
 
 const CheckInPage: FC = () => {
   const rest = useRest();

@@ -1,4 +1,5 @@
-import {Button, Popconfirm} from 'antd';
+import Button from 'antd/es/button';
+import Popconfirm from 'antd/es/popconfirm';
 import {type FC, useCallback} from 'react';
 import {type AuthUser, useAuth, useRest} from '../providers/auth';
 

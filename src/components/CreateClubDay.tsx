@@ -1,9 +1,9 @@
-import {Button} from 'antd';
-import {type FC, useState} from 'react';
-import CreateClubDayModal from './CreateClubDayModal';
-import {useRest} from '../providers/auth';
+import Button from 'antd/es/button';
 import type {Dayjs} from 'dayjs';
+import {type FC, useState} from 'react';
+import {useRest} from '../providers/auth';
 import type {Club} from '../rest';
+import CreateClubDayModal from './CreateClubDayModal';
 
 type Props = {
   rerender: () => void;

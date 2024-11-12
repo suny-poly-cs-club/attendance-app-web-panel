@@ -1,6 +1,7 @@
+import Form from 'antd/es/form';
+import Input from 'antd/es/input';
+import Modal from 'antd/es/modal';
 import type {FC} from 'react';
-import {Form, Input, Modal} from 'antd';
-
 import {useAuth} from '../providers/auth';
 import {RestError} from '../rest';
 
@@ -8,7 +9,8 @@ type SignUpProps = {
   open: boolean;
   onCancel: () => void;
 };
-export const SignUpForm: FC<SignUpProps> = ({open, onCancel}) => {
+
+const SignUpForm: FC<SignUpProps> = ({open, onCancel}) => {
   const {signUp} = useAuth();
 
   type SignUpForm = {
@@ -97,3 +99,5 @@ export const SignUpForm: FC<SignUpProps> = ({open, onCancel}) => {
     </Modal>
   );
 };
+
+export default SignUpForm;

@@ -1,13 +1,13 @@
-import {Button} from 'antd';
+import Button from 'antd/es/button';
 import {type FC, useCallback, useState} from 'react';
-import {ManageClubAdminsModal} from './ManageClubAdminsModal.tsx';
 import type {Club} from '../rest.ts';
+import ManageClubAdminsModal from './ManageClubAdminsModal.tsx';
 
 type Props = {
   club: Club;
 };
 
-export const ManageClubAdminButton: FC<Props> = ({club}) => {
+const ManageClubAdminButton: FC<Props> = ({club}) => {
   const [open, setOpen] = useState(false);
 
   const onClick = useCallback(() => {
@@ -23,3 +23,5 @@ export const ManageClubAdminButton: FC<Props> = ({club}) => {
     </>
   );
 };
+
+export default ManageClubAdminButton;

@@ -1,11 +1,10 @@
+import Layout from 'antd/es/layout';
 import {type FC, Suspense, lazy} from 'react';
 import {Route} from 'wouter';
-
-import {Layout} from 'antd';
-const {Content, Footer} = Layout;
-
-import Nav from './components/Nav';
 import AuthRoute from './components/AuthRoute';
+import Nav from './components/Nav';
+
+const {Content, Footer} = Layout;
 
 const ProfilePage = lazy(() => import('./pages/Profile'));
 const HomePage = lazy(() => import('./pages/Home'));

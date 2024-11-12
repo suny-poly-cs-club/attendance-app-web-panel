@@ -1,5 +1,10 @@
+import Button from 'antd/es/button';
+import Divider from 'antd/es/divider';
+import Input from 'antd/es/input';
+import List from 'antd/es/list';
+import Modal from 'antd/es/modal';
+import Popconfirm from 'antd/es/popconfirm';
 import {type FC, useEffect, useState} from 'react';
-import {Button, Divider, Input, List, Modal, Popconfirm} from 'antd';
 const {Search} = Input;
 
 import {type AuthUser, useAuth, useRest} from '../providers/auth';
@@ -11,7 +16,7 @@ type Props = {
   club: Club;
 };
 
-export const ManageClubAdminsModal: FC<Props> = ({club, open, setOpen}) => {
+const ManageClubAdminsModal: FC<Props> = ({club, open, setOpen}) => {
   const rest = useRest();
 
   const [isSearching, setIsSearching] = useState(false);
@@ -159,3 +164,5 @@ export const ManageClubAdminsModal: FC<Props> = ({club, open, setOpen}) => {
     </Modal>
   );
 };
+
+export default ManageClubAdminsModal;

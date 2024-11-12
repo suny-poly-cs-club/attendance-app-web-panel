@@ -5,7 +5,6 @@ import {
   useEffect,
   useState,
 } from 'react';
-
 import {RestClient, RestError} from '../rest';
 
 const TOKEN_LOCAL_STORAGE_KEY = 'token';

@@ -1,11 +1,12 @@
+import type {TableColumnsType} from 'antd';
+import Flex from 'antd/es/flex';
+import Table from 'antd/es/table';
 import {type FC, useEffect, useState} from 'react';
-import {Flex, Table, type TableColumnsType} from 'antd';
-
-import {useRest} from '../providers/auth';
-import styles from './ClubDays.module.css';
 import CreateClubButton from '../components/CreateClub.tsx';
 import DeleteClubButton from '../components/DeleteClubButton.tsx';
-import {ManageClubAdminButton} from '../components/ManageClubAdmins.tsx';
+import ManageClubAdminButton from '../components/ManageClubAdmins.tsx';
+import {useRest} from '../providers/auth';
+import styles from './ClubDays.module.css';
 
 type Club = {
   id: number;

@@ -1,8 +1,8 @@
 import {type FC, type ReactNode, lazy} from 'react';
 import {Redirect} from 'wouter';
 
-import {useAuth} from '../providers/auth';
 import LoadingPage from '../pages/Loading';
+import {useAuth} from '../providers/auth';
 const HomePage = lazy(() => import('../pages/Home'));
 
 // TODO: show login modal if logged out?

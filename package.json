@@ -8,7 +8,7 @@
     "build": "tsc && vite build",
     "lint": "biome lint .",
     "preview": "vite preview",
-    "fmt": "biome format --write ."
+    "fmt": "biome check --write ."
   },
   "dependencies": {
     "antd": "^5.22.0",

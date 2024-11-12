@@ -1,9 +1,10 @@
+import type {TableColumnsType} from 'antd';
+import Space from 'antd/es/space';
+import Table from 'antd/es/table';
 import {type FC, useEffect, useState} from 'react';
-import {Space, Table, type TableColumnsType} from 'antd';
-
+import UserServiceAdminButton from '../components/UserServiceAdminButton.tsx';
 import {type AuthUser, useRest} from '../providers/auth';
 import styles from './ClubDays.module.css';
-import UserServiceAdminButton from '../components/UserServiceAdminButton.tsx';
 
 type UserTableData = AuthUser & {
   key: number;

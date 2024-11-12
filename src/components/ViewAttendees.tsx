@@ -1,4 +1,4 @@
-import {Button} from 'antd';
+import Button from 'antd/es/button';
 import {type FC, useState} from 'react';
 import type {Club, ClubDay} from '../rest';
 import ViewAttendeesModal from './ViewAttendeesModal';

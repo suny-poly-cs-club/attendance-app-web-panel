@@ -1,11 +1,10 @@
+import Button from 'antd/es/button';
 import {type FC, useEffect} from 'react';
-import {Button} from 'antd';
-
+import LoginForm from '../components/LogInForm';
+import SignUpForm from '../components/SignUpForm';
+import {useModal} from '../hooks/modal';
 import {useAuth} from '../providers/auth';
 import styles from './Home.module.css';
-import {useModal} from '../hooks/modal';
-import {LoginForm} from '../components/LogInForm';
-import {SignUpForm} from '../components/SignUpForm';
 
 const HomePage: FC = () => {
   const {isLoggedIn, user} = useAuth();

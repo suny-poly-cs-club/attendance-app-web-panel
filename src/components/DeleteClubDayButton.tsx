@@ -1,7 +1,8 @@
-import {Button, Popconfirm} from 'antd';
+import Button from 'antd/es/button';
+import Popconfirm from 'antd/es/popconfirm';
 import {type FC, useCallback} from 'react';
-import type {Club, ClubDay} from '../rest';
 import {useRest} from '../providers/auth';
+import type {Club, ClubDay} from '../rest';
 
 type Props = {
   club: Club;

@@ -1,6 +1,7 @@
+import Form from 'antd/es/form';
+import Input from 'antd/es/input/Input';
+import Modal from 'antd/es/modal';
 import type {FC} from 'react';
-import {Form, Input, Modal} from 'antd';
-
 import {useAuth} from '../providers/auth';
 import {RestError} from '../rest';
 
@@ -9,7 +10,7 @@ type LogInProps = {
   onCancel: () => void;
 };
 
-export const LoginForm: FC<LogInProps> = ({open, onCancel}) => {
+const LoginForm: FC<LogInProps> = ({open, onCancel}) => {
   const {login} = useAuth();
   const [form] = Form.useForm<{[key in 'email' | 'password']: string}>();
 
@@ -77,3 +78,5 @@ export const LoginForm: FC<LogInProps> = ({open, onCancel}) => {
     </Modal>
   );
 };
+
+export default LoginForm;

@@ -1,5 +1,5 @@
+import Result from 'antd/es/result';
 import type {FC} from 'react';
-import {Result} from 'antd';
 
 type Props = {
   clubName: string;

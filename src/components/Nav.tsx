@@ -1,10 +1,10 @@
-import type {FC} from 'react';
-import {Menu, Layout, Dropdown} from 'antd';
-import {useAuth} from '../providers/auth';
-import {Link, useLocation} from 'wouter';
+import Dropdown from 'antd/es/dropdown/dropdown';
+import {Header} from 'antd/es/layout/layout';
+import Menu from 'antd/es/menu';
 import type {MenuItemType} from 'antd/es/menu/interface';
-
-const {Header} = Layout;
+import type {FC} from 'react';
+import {Link, useLocation} from 'wouter';
+import {useAuth} from '../providers/auth';
 
 const Nav: FC = () => {
   const {user, logout} = useAuth();
@@ -51,45 +51,6 @@ const Nav: FC = () => {
         mode='horizontal'
         items={menuItems}
       />
-      {/* <Menu style={{width: '100%'}} theme='dark' mode='horizontal'> */}
-      {/* <Menu.Item key='/'> */}
-      {/*   <Link href='/'> */}
-      {/*     Home */}
-      {/*   </Link> */}
-      {/* </Menu.Item> */}
-
-      {/* {user && ( */}
-      {/*   <Menu.Item key='/check-in'> */}
-      {/*     <Link href='/check-in'> */}
-      {/*       Check In */}
-      {/*     </Link> */}
-      {/*   </Menu.Item> */}
-      {/* )} */}
-
-      {/* {(user?.isClubAdmin || user?.isAdmin) && ( */}
-      {/*   <Menu.Item key='/club-days'> */}
-      {/*     <Link href='/club-days'> */}
-      {/*       Club Days */}
-      {/*     </Link> */}
-      {/*   </Menu.Item> */}
-      {/* )} */}
-
-      {/* {user?.isAdmin && ( */}
-      {/*   <> */}
-      {/*     <Menu.Item key='/clubs'> */}
-      {/*       <Link href='/clubs'> */}
-      {/*         Clubs */}
-      {/*       </Link> */}
-      {/*     </Menu.Item> */}
-      {/**/}
-      {/*     <Menu.Item key='/users'> */}
-      {/*       <Link href='/users'> */}
-      {/*         Users */}
-      {/*       </Link> */}
-      {/*     </Menu.Item> */}
-      {/*   </> */}
-      {/* )} */}
-      {/* </Menu> */}
 
       {user && (
         <Dropdown

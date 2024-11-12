@@ -1,25 +1,21 @@
-import {type FC, useEffect, useState} from 'react';
-import {
-  Flex,
-  Space,
-  Table,
-  type TableColumnsType,
-  Select,
-  Row,
-  Col,
-} from 'antd';
+import type {TableColumnsType} from 'antd';
+import Col from 'antd/es/col';
+import Flex from 'antd/es/flex';
+import Row from 'antd/es/row';
+import Select from 'antd/es/select';
+import Space from 'antd/es/space';
+import Table from 'antd/es/table';
 import dayjs from 'dayjs';
-
-import type {ClubDay} from '../rest';
-import {useRest} from '../providers/auth';
-import ViewAttendeesButton from '../components/ViewAttendees';
-import DeleteClubDayButton from '../components/DeleteClubDayButton';
-
-import styles from './ClubDays.module.css';
+import {type FC, Suspense, lazy, useEffect, useState} from 'react';
 import CreateClubDayButton from '../components/CreateClubDay';
-import QRDisplayModalButton from '../components/QRModal';
+import DeleteClubDayButton from '../components/DeleteClubDayButton';
+import ManageClubAdminButton from '../components/ManageClubAdmins.tsx';
+import ViewAttendeesButton from '../components/ViewAttendees';
+import {useRest} from '../providers/auth';
+import type {ClubDay} from '../rest';
+import styles from './ClubDays.module.css';
 
-import {ManageClubAdminButton} from '../components/ManageClubAdmins.tsx';
+const QRDisplayModalButton = lazy(() => import('../components/QRModal'));
 
 type ClubDayTableData = ClubDay & {
   key: number;
@@ -139,7 +135,9 @@ const ClubDaysPage: FC = () => {
       render: (_, day) => (
         <>
           <Space>
-            <QRDisplayModalButton club={selectedClub} clubDay={day} />
+            <Suspense>
+              <QRDisplayModalButton club={selectedClub} clubDay={day} />
+            </Suspense>
 
             <ViewAttendeesButton club={selectedClub} clubDay={day} />
 

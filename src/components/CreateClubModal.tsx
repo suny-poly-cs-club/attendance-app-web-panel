@@ -1,4 +1,6 @@
-import {Input, Form, Modal} from 'antd';
+import Form from 'antd/es/form';
+import Input from 'antd/es/input/Input';
+import Modal from 'antd/es/modal/Modal';
 import type {FC} from 'react';
 
 type Props = {

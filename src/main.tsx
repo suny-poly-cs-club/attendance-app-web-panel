@@ -1,9 +1,9 @@
+import dayjs from 'dayjs';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import {AuthProvider} from './providers/auth.tsx';
-import dayjs from 'dayjs';
-import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
 import './index.css';
 

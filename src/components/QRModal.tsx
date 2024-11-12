@@ -1,11 +1,11 @@
-import {Button, Modal} from 'antd';
-import {type FC, useEffect, useRef, useState} from 'react';
-import type {Club, ClubDay} from '../rest';
-import {useRest} from '../providers/auth';
+import Button from 'antd/es/button';
+import Modal from 'antd/es/modal';
 import qr from 'qrcode';
-
-import styles from './QRModal.module.css';
+import {type FC, useEffect, useRef, useState} from 'react';
 import homeStyles from '../pages/Home.module.css';
+import {useRest} from '../providers/auth';
+import type {Club, ClubDay} from '../rest';
+import styles from './QRModal.module.css';
 
 type ButtonProps = {
   club: Club;

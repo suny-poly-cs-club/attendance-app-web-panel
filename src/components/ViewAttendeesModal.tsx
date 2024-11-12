@@ -1,7 +1,8 @@
+import Button from 'antd/es/button';
+import Modal from 'antd/es/modal';
 import {type FC, useEffect, useState} from 'react';
 import {type AuthUser, useRest} from '../providers/auth';
 import type {Club, ClubDay} from '../rest';
-import {Button, Modal} from 'antd';
 import {downloadFile} from '../util/download';
 
 type Props = {
