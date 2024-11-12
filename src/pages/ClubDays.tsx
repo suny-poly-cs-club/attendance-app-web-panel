@@ -50,9 +50,9 @@ const ClubsDropdown: FC<DropDownProps> = ({onSelect}) => {
   useEffect(() => {
     rest.getClubs().then(clubs => {
       setClubList(clubs);
-      setSelectedClub(clubs[0].id);
+      setSelectedClub(clubs[0]?.id);
       // TODO: is there a better way to do this?
-      onSelect(clubs[0]);
+      onSelect(clubs?.[0]);
     });
   }, [rest, onSelect]);
 

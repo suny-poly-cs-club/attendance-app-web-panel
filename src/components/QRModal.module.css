@@ -4,10 +4,15 @@
   }
 
   .qrCode {
-    background-color: red;
     visibility: visible;
     position: fixed;
     top: 0;
     left: 0;
+    width: 100%;
+    font-size: 2em;
   }
+}
+
+.code {
+  margin-top: 0;
 }

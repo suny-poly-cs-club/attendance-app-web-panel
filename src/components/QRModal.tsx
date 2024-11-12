@@ -5,6 +5,7 @@ import {useRest} from '../providers/auth';
 import qr from 'qrcode';
 
 import styles from './QRModal.module.css';
+import homeStyles from '../pages/Home.module.css';
 
 type ButtonProps = {
   club: Club;
@@ -50,7 +51,7 @@ const QRDisplayModal: FC<ModalProps> = ({club, clubDay, open, onCancel}) => {
   const rest = useRest();
   const ref = useRef<HTMLImageElement>(null);
   const [qrData, setQrData] = useState<string | null>(null);
-  const [linkCode, setLinkCode] = useState<string>('');
+  const [checkInCode, setCheckInCode] = useState<string>('');
 
   useEffect(() => {
     if (!open) {
@@ -58,8 +59,10 @@ const QRDisplayModal: FC<ModalProps> = ({club, clubDay, open, onCancel}) => {
     }
 
     rest.getClubDayQRToken(club.id, clubDay.id).then(token => {
-      setLinkCode(token.token);
-      qr.toString(token.token, {type: 'svg'}).then(qrSvg => {
+      setCheckInCode(token.token);
+
+      // TODO: this isn't necessarily safe to use, like if the application is on a sub-path reverse proxy. but that's probably okay
+      qr.toString(`${window.location.protocol}//${window.location.host}/check-in?code=${token.token}`, {type: 'svg'}).then(qrSvg => {
         const dataURL = `data:image/svg+xml;utf8,${encodeURIComponent(qrSvg)}`;
         setQrData(dataURL);
       });
@@ -103,10 +106,10 @@ const QRDisplayModal: FC<ModalProps> = ({club, clubDay, open, onCancel}) => {
       ]}
     >
       {qrData && (
-        <>
-          <img alt='QR code' ref={ref} src={qrData} className={styles.qrCode} />
-          <p style={{alignContent: 'center'}}>{linkCode}</p>
-        </>
+        <div className={`${styles.qrCode} ${homeStyles.centered}`}>
+          <img alt='QR code' ref={ref} src={qrData} />
+          <h1 className={styles.code}>{checkInCode}</h1>
+        </div>
       )}
     </Modal>
   );

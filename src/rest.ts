@@ -12,6 +12,11 @@ export type Club = {
   name: string;
 };
 
+export type CheckIn = {
+  userID: string;
+  clubDayID: number;
+};
+
 export class RestClient {
   #token: string | null;
   #BASE_URL: string = import.meta.env.VITE_API_BASE_URL;
@@ -260,9 +265,15 @@ export class RestClient {
   }
 
   async getClubNameFromCode(code: string) {
-    return this.#wrap(fetch(this.#buildURL('check-code', code))).then(r =>
-      r?.json()
-    );
+    // return this.#wrap(fetch(this.#buildURL('check-code', code))).then(r =>
+    //   r?.json()
+    // );
+
+    return this.#wrap(
+      fetch(this.#buildURL('check-code', code), {
+        headers: this.#getHeaders(),
+      })
+    ).then(r => r?.json()).then();
   }
 
   async getUserCheckedIn(code: string) {
@@ -288,7 +299,7 @@ export class RestClient {
           'content-type': 'application/json',
         },
       })
-    );
+    ).then(r => r?.json() as Promise<Club>);
   }
 
   /**
