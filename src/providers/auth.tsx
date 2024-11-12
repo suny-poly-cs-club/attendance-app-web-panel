@@ -139,7 +139,7 @@ export const AuthProvider = ({children}: PropsWithChildren) => {
     signUp,
     login,
     logout,
-    isLoggedIn: !!token as true,
+    isLoggedIn: (!!token && !!user) as true,
     isLoading,
     rest: restClient,
   };
