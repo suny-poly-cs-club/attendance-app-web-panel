@@ -13,22 +13,28 @@ const Nav: FC = () => {
   // TODO: how do I use this with wouter?
 
   const menuItems: MenuItemType[] = [
-    {key: '/', label: (<Link href='/'>Home</Link>)},
+    {key: '/', label: <Link href='/'>Home</Link>},
   ];
 
   if (user) {
-    menuItems.push({key: '/check-in', label: <Link href='/check-in'>Check In</Link>});
+    menuItems.push({
+      key: '/check-in',
+      label: <Link href='/check-in'>Check In</Link>,
+    });
   }
 
   if (user?.isClubAdmin || user?.isAdmin) {
-    menuItems.push({key: '/club-days', label: <Link href='/club-days'>Club Days</Link>});
+    menuItems.push({
+      key: '/club-days',
+      label: <Link href='/club-days'>Club Days</Link>,
+    });
   }
 
   if (user?.isAdmin) {
     menuItems.push(
       {key: '/clubs', label: <Link href='/clubs'>Clubs</Link>},
-      {key: '/users', label: <Link href='/users'>Users</Link>},
-    )
+      {key: '/users', label: <Link href='/users'>Users</Link>}
+    );
   }
 
   return (
@@ -39,45 +45,50 @@ const Nav: FC = () => {
         justifyContent: 'space-between',
       }}
     >
-      <Menu style={{width: '100%'}} theme='dark' mode='horizontal' items={menuItems} />
+      <Menu
+        style={{width: '100%'}}
+        theme='dark'
+        mode='horizontal'
+        items={menuItems}
+      />
       {/* <Menu style={{width: '100%'}} theme='dark' mode='horizontal'> */}
-        {/* <Menu.Item key='/'> */}
-        {/*   <Link href='/'> */}
-        {/*     Home */}
-        {/*   </Link> */}
-        {/* </Menu.Item> */}
+      {/* <Menu.Item key='/'> */}
+      {/*   <Link href='/'> */}
+      {/*     Home */}
+      {/*   </Link> */}
+      {/* </Menu.Item> */}
 
-        {/* {user && ( */}
-        {/*   <Menu.Item key='/check-in'> */}
-        {/*     <Link href='/check-in'> */}
-        {/*       Check In */}
-        {/*     </Link> */}
-        {/*   </Menu.Item> */}
-        {/* )} */}
+      {/* {user && ( */}
+      {/*   <Menu.Item key='/check-in'> */}
+      {/*     <Link href='/check-in'> */}
+      {/*       Check In */}
+      {/*     </Link> */}
+      {/*   </Menu.Item> */}
+      {/* )} */}
 
-        {/* {(user?.isClubAdmin || user?.isAdmin) && ( */}
-        {/*   <Menu.Item key='/club-days'> */}
-        {/*     <Link href='/club-days'> */}
-        {/*       Club Days */}
-        {/*     </Link> */}
-        {/*   </Menu.Item> */}
-        {/* )} */}
+      {/* {(user?.isClubAdmin || user?.isAdmin) && ( */}
+      {/*   <Menu.Item key='/club-days'> */}
+      {/*     <Link href='/club-days'> */}
+      {/*       Club Days */}
+      {/*     </Link> */}
+      {/*   </Menu.Item> */}
+      {/* )} */}
 
-        {/* {user?.isAdmin && ( */}
-        {/*   <> */}
-        {/*     <Menu.Item key='/clubs'> */}
-        {/*       <Link href='/clubs'> */}
-        {/*         Clubs */}
-        {/*       </Link> */}
-        {/*     </Menu.Item> */}
-        {/**/}
-        {/*     <Menu.Item key='/users'> */}
-        {/*       <Link href='/users'> */}
-        {/*         Users */}
-        {/*       </Link> */}
-        {/*     </Menu.Item> */}
-        {/*   </> */}
-        {/* )} */}
+      {/* {user?.isAdmin && ( */}
+      {/*   <> */}
+      {/*     <Menu.Item key='/clubs'> */}
+      {/*       <Link href='/clubs'> */}
+      {/*         Clubs */}
+      {/*       </Link> */}
+      {/*     </Menu.Item> */}
+      {/**/}
+      {/*     <Menu.Item key='/users'> */}
+      {/*       <Link href='/users'> */}
+      {/*         Users */}
+      {/*       </Link> */}
+      {/*     </Menu.Item> */}
+      {/*   </> */}
+      {/* )} */}
       {/* </Menu> */}
 
       {user && (

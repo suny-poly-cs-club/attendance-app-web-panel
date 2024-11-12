@@ -18,38 +18,40 @@ const CheckInPage: FC = () => {
   const [inputDisabled, setInputDisabled] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  const checkIn = useCallback(async (code: string) => {
-    if (!code) {
-      return;
-    }
+  const checkIn = useCallback(
+    async (code: string) => {
+      if (!code) {
+        return;
+      }
 
-    const isInvalid = !/^\d{6}$/.test(code) || !isValidLuhn(Number(code));
-    if (isInvalid) {
-      setInputStatus('warning');
-      setErrorMsg('invalid code');
-      return;
-    }
+      const isInvalid = !/^\d{6}$/.test(code) || !isValidLuhn(Number(code));
+      if (isInvalid) {
+        setInputStatus('warning');
+        setErrorMsg('invalid code');
+        return;
+      }
 
-    try {
-      const club = await rest.checkIn(code);
-      setClubName(club.name);
-    } catch (err) {
-      setInputStatus('error');
-      setErrorMsg('check in failed');
-      return;
-    }
+      try {
+        const club = await rest.checkIn(code);
+        setClubName(club.name);
+      } catch (err) {
+        setInputStatus('error');
+        setErrorMsg('check in failed');
+        return;
+      }
 
-    setInputStatus('');
-    setCheckedIn(true);
-  }, [rest]);
-
+      setInputStatus('');
+      setCheckedIn(true);
+    },
+    [rest]
+  );
 
   useEffect(() => {
     if (!queryCode) {
       return;
     }
 
-    checkIn(queryCode)
+    checkIn(queryCode);
   }, [queryCode, checkIn]);
 
   const onSubmit = async (code: string) => {
@@ -69,40 +71,45 @@ const CheckInPage: FC = () => {
       }
     }
 
-    const changed = input.length !== prevInput.length || !input.every((a, i) => a === prevInput[i]);
+    const changed =
+      input.length !== prevInput.length ||
+      !input.every((a, i) => a === prevInput[i]);
 
     if (changed) {
       setErrorMsg('');
       setInputStatus('');
     }
 
-    setPrevInput(input)
+    setPrevInput(input);
   };
 
   return (
     <div className={homeStyles.centered}>
-      {checkedIn && clubName
-        ? (<CheckedInMessage clubName={clubName} />)
-        : (
-          <>
-            <h1>Check In</h1>
-            <h2>Enter Check-In Code</h2>
-            <Flex vertical>
-              <Input.OTP
-                autoFocus
-                length={6}
-                onChange={onSubmit}
-                onInput={onInput}
-                status={inputStatus}
-                disabled={inputDisabled}
-              />
-              {!!errorMsg && <Text type={inputStatus === 'error' ? 'danger' : 'warning'}>{errorMsg}</Text>}
-            </Flex>
-          </>
-        )
-      }
+      {checkedIn && clubName ? (
+        <CheckedInMessage clubName={clubName} />
+      ) : (
+        <>
+          <h1>Check In</h1>
+          <h2>Enter Check-In Code</h2>
+          <Flex vertical>
+            <Input.OTP
+              autoFocus
+              length={6}
+              onChange={onSubmit}
+              onInput={onInput}
+              status={inputStatus}
+              disabled={inputDisabled}
+            />
+            {!!errorMsg && (
+              <Text type={inputStatus === 'error' ? 'danger' : 'warning'}>
+                {errorMsg}
+              </Text>
+            )}
+          </Flex>
+        </>
+      )}
     </div>
-  )
+  );
 };
 
 export default CheckInPage;

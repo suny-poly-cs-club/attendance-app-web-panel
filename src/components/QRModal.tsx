@@ -62,7 +62,10 @@ const QRDisplayModal: FC<ModalProps> = ({club, clubDay, open, onCancel}) => {
       setCheckInCode(token.token);
 
       // TODO: this isn't necessarily safe to use, like if the application is on a sub-path reverse proxy. but that's probably okay
-      qr.toString(`${window.location.protocol}//${window.location.host}/check-in?code=${token.token}`, {type: 'svg'}).then(qrSvg => {
+      qr.toString(
+        `${window.location.protocol}//${window.location.host}/check-in?code=${token.token}`,
+        {type: 'svg'}
+      ).then(qrSvg => {
         const dataURL = `data:image/svg+xml;utf8,${encodeURIComponent(qrSvg)}`;
         setQrData(dataURL);
       });

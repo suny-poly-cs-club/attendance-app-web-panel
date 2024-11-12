@@ -273,7 +273,9 @@ export class RestClient {
       fetch(this.#buildURL('check-code', code), {
         headers: this.#getHeaders(),
       })
-    ).then(r => r?.json()).then();
+    )
+      .then(r => r?.json())
+      .then();
   }
 
   async getUserCheckedIn(code: string) {
