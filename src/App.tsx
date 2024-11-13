@@ -1,3 +1,4 @@
+import Divider from 'antd/es/divider';
 import Layout from 'antd/es/layout';
 import {type FC, Suspense, lazy} from 'react';
 import {Route} from 'wouter';
@@ -12,6 +13,9 @@ const ClubDaysPage = lazy(() => import('./pages/ClubDays'));
 const ClubsPage = lazy(() => import('./pages/Clubs.tsx'));
 const UsersPage = lazy(() => import('./pages/Users.tsx'));
 const CheckInPage = lazy(() => import('./pages/CheckIn.tsx'));
+
+const GC = import.meta.env.VITE_GIT_COMMIT?.slice(0, 7);
+const GH = `https://github.com/suny-poly-cs-club/attendance-app-web-panel${GC ? `/tree/${GC}` : ''}`;
 
 const App: FC = () => {
   return (
@@ -67,7 +71,14 @@ const App: FC = () => {
       </Content>
 
       <Footer style={{textAlign: 'center', marginTop: 'auto'}}>
-        &copy; 2024 SUNY Poly Computer Science Club
+        &copy; 2024 SUNY Poly Computer Science Club{' '}
+        <Divider type='vertical' />{' '}
+        rev.{' '}
+        <code>
+          <a style={{color: 'unset', textDecoration: 'underline'}} href={GH}>
+            {import.meta.env.VITE_GIT_COMMIT || 'unknown'}
+          </a>
+        </code>
       </Footer>
     </Layout>
   );

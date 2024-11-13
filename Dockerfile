@@ -6,6 +6,8 @@ COPY package.json pnpm-lock.yaml ./
 RUN pnpm install
 COPY . .
 ARG VITE_API_BASE_URL
+ARG GIT_COMMIT
+ENV VITE_GIT_COMMIT=${GIT_COMMIT}
 RUN pnpm build
 
 FROM nginx:1.25-alpine AS runtime
