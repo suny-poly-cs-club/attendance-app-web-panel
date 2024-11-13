@@ -71,12 +71,11 @@ const App: FC = () => {
       </Content>
 
       <Footer style={{textAlign: 'center', marginTop: 'auto'}}>
-        &copy; 2024 SUNY Poly Computer Science Club{' '}
-        <Divider type='vertical' />{' '}
+        &copy; 2024 SUNY Poly Computer Science Club <Divider type='vertical' />{' '}
         rev.{' '}
         <code>
           <a style={{color: 'unset', textDecoration: 'underline'}} href={GH}>
-            {import.meta.env.VITE_GIT_COMMIT || 'unknown'}
+            {GC || 'unknown'}
           </a>
         </code>
       </Footer>
