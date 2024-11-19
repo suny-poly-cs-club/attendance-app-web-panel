@@ -1,4 +1,4 @@
-import {isValidLuhn} from '@benricheson101/util';
+import {isValidLuhn} from '@benricheson101/util/build/lib/misc/luhnCheck';
 import Flex from 'antd/es/flex';
 import Input from 'antd/es/input';
 import Text from 'antd/es/typography/Text';
