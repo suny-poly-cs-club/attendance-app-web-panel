@@ -18,3 +18,4 @@ pnpm Build
 - page showing all club days you've checked in to
 - live check in feed on QR page?
   - show people's names in a feed as they check in, with the QR code above it
+- adjust how SSL certs are handled/generated
