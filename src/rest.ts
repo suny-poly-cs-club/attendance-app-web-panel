@@ -264,6 +264,12 @@ export class RestClient {
     );
   }
 
+  async getMessageOfTheDay(): Promise<string|undefined> {
+    return this.#wrap(
+      fetch(this.#buildURL("message"))
+    ).then(r => r?.text())
+  }
+
   async getClubNameFromCode(code: string) {
     // return this.#wrap(fetch(this.#buildURL('check-code', code))).then(r =>
     //   r?.json()
