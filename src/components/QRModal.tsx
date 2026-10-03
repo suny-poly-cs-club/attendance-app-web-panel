@@ -18,14 +18,13 @@ const QRDisplayModalButton: FC<ButtonProps> = ({club, clubDay}) => {
   const onCancel = () => {
     setOpen(false);
   };
-
-  const starts = new Date(clubDay.startsAt);
+  
   const ends = new Date(clubDay.endsAt);
 
   return (
     <>
       <Button
-        disabled={starts.getTime() > Date.now() || ends.getTime() < Date.now()}
+        disabled={ends.getTime() < Date.now()}
         onClick={() => setOpen(true)}
       >
         Open QR
