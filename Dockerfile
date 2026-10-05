@@ -2,7 +2,7 @@ FROM node:lts-alpine AS builder
 
 WORKDIR /usr/src/app
 RUN corepack enable
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install
 COPY . .
 ARG VITE_API_BASE_URL
