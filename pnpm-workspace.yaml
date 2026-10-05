@@ -2,3 +2,8 @@ allowBuilds:
   '@biomejs/biome': true
   '@swc/core': true
   esbuild: true
+
+onlyBuiltDependencies:
+  - '@biomejs/biome'
+  - '@swc/core'
+  - esbuild
